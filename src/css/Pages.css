@@ -1,0 +1,78 @@
+.userCard{
+    background-color:#e0ffff;
+    height:140px;
+    border: 5px solid white;
+    padding:0;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.userCard:hover{
+    background-color: #add8e6;
+    border: 2px solid white;
+    cursor: pointer
+}
+
+.img{
+    background-color: green;
+    border-radius: 100%;
+    height:100%;
+    padding:0px;
+    margin:0
+}
+
+.column2{
+    height:100px;
+    padding:0;
+    margin:0;
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+}
+
+.userElement{
+    background-color: red;
+    height:20px;
+    font-size: 10px
+}
+
+.noPadding{
+    padding:0;
+    margin:0
+}
+
+ul.mainMenu  {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    background-color: white;
+  }
+  
+  .mainMenu li {
+     float: left;
+  }
+  
+  /* And so on... */
+  .mainMenu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .pageTitle {
+    font-size: 28px;
+    text-align: left;
+    padding:0;
+    margin-top:-30px
+  }
+
+  .add{
+    text-align: left;
+  }
+
+  .buttonClicked{
+    background-color: #add8e6;
+  }

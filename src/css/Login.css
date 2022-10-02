@@ -1,0 +1,33 @@
+.login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+}
+
+.error{
+    font-size: (calc(12px + 2vmin));
+    color: red;
+}
+
+input{
+    font-size: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px 10px 10px 10px;
+    height:30px
+}
+
+.submit{
+    font-size: (calc(15px + 2vmin));
+    height: 50px;
+    padding: 10px;
+}
+
+
+/*
+######################################
+*/
+
+
+

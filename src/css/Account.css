@@ -1,0 +1,21 @@
+.accountDescription{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.accountInformation{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.account{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.row div{
+    padding:10px
+}

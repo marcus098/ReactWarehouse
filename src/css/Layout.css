@@ -1,0 +1,83 @@
+.ArrowPages{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top:30px
+}
+
+.ArrowPages div{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    align-items: center;
+    
+}
+.purchase{
+    cursor: pointer
+}
+.currentBoxPage{
+    color:red
+}
+
+.overlay{
+    position: absolute;
+    top:0;
+    height:100vh;
+    color:white;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    margin-left: -60px
+}
+
+.close{
+    position: absolute;
+    right:15px;
+    font-size:30px;
+    cursor: pointer
+}
+
+.title{
+    height:10vh;
+    align-content: center;
+}
+.description{
+    height: 50vh;
+    align-content: center;
+}
+.buttons{
+    height: 20vh;
+    align-content: center;
+}
+.buttons div Button{
+    margin: 5px;
+}
+
+.rowContent{
+    z-index:100
+}
+
+
+
+/* SEARCH BAR */
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+@import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
+
+body {
+	background: #DDD;
+	font-size: 15px;
+}
+
+.iconSearch{
+  margin-left: -27px;
+  margin-top:10px;
+  cursor: pointer;
+  position: absolute;
+}
+
+.search-container{
+  position:absolute;
+  top:0;
+}
