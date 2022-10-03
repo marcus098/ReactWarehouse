@@ -2,19 +2,22 @@ import React from "react";
 import { Navbar } from "../components/Navbar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Cart.scss';
+import { Button } from "react-bootstrap";
 
 export class Cart extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             toggle: false,
-            classCart: "fade-rapid"
+            classCart: "fade-rapid",
+            products: [],
+            sell:false
         }
         this.toggle = this.toggle.bind(this);
     }
 
     toggle() {
-        console.log("toggle");
+        console.log(this.props);
         if(this.state.classCart==""){
         this.setState({
           toggle: !this.state.toggle,
@@ -27,54 +30,58 @@ export class Cart extends React.Component{
           });
     }
       }
-
+      componentDidMount = () => {
+        var storedArray = JSON.parse(sessionStorage.getItem("productsCart"));
+        this.setState({products: storedArray});
+        console.log(this.state.products);
+        
+      }
     render(){
-        console.log(this.state.classCart);
+        var productsElement = (<div>Carrello Vuoto</div>);
+        var numberProducts = 0;
+        var buttonBuy = (<></>)
+        var total = 0;
+        if(this.state.products && this.state.products.length != 0){
+          numberProducts = this.state.products.length;
+          productsElement = [];
+          for(var i = 0; i < this.state.products.length; i++){
+            total += (this.state.products[i].quantity * this.state.products[i].price);
+            productsElement.push(
+              <li class="clearfix">
+                <span class="item-name">{this.state.products[i].name}</span>
+                <span class="item-price">€{this.state.products[i].price}</span>
+                <span class="item-quantity"><Button>-</Button>Quantita': {this.state.products[i].quantity}<Button>+</Button></span>
+              </li>
+            );
+          }
+          buttonBuy = (<a href="#" class="button" onClick={() => {this.props.sell(); Cart.render()}}>Vendi</a>); 
+        }
         return(
             <section>
                 <nav>
                     <div class="containerCart">
                         <ul class="navbar-right">
-                            <li><a href="#" id="cart" onClick={() => this.toggle()}><i class="fa fa-shopping-cart"></i> Cart <span class="badge">3</span></a></li>
+                            <li><a href="#" id="cart" onClick={() => this.toggle()}><i className="fa fa-shopping-cart"></i> Cart <span class="badge">{numberProducts}</span></a></li>
                         </ul> 
                     </div> 
                 </nav>
 
 
-<div class={"containerCart "+ this.state.classCart}>
-  <div class="shopping-cart">
+<div className={"containerCart "+ this.state.classCart}>
+  <div className="shopping-cart">
     <div class="shopping-cart-header">
-      <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
+      <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{numberProducts}</span>
       <div class="shopping-cart-total">
-        <span class="lighter-text">Total:</span>
-        <span class="main-color-text">$2,229.97</span>
+        <span class="lighter-text">Totale:</span>
+        <span class="main-color-text">€{total}</span>
       </div>
     </div> 
 
     <ul class="shopping-cart-items">
-      <li class="clearfix">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
-        <span class="item-name">Sony DSC-RX100M III</span>
-        <span class="item-price">$849.99</span>
-        <span class="item-quantity">Quantity: 01</span>
-      </li>
-
-      <li class="clearfix">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1" />
-        <span class="item-name">KS Automatic Mechanic...</span>
-        <span class="item-price">$1,249.99</span>
-        <span class="item-quantity">Quantity: 01</span>
-      </li>
-
-      <li class="clearfix">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item3.jpg" alt="item1" />
-        <span class="item-name">Kindle, 6" Glare-Free To...</span>
-        <span class="item-price">$129.99</span>
-        <span class="item-quantity">Quantity: 01</span>
-      </li>
+      {productsElement}
     </ul>
 
-    <a href="#" class="button">Checkout</a>
+    {buttonBuy}
   </div>
 </div> 
             </section>

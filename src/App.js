@@ -15,7 +15,6 @@ import AddOrder from './pages/AddOrder';
 import AddCategory from './pages/AddCategory';
 import UsersControlPage from './pages/UsersControlPage';
 import ControlPanel from './pages/ControlPanel';
-import ProvaPage from './pages/ProvaPage';
 import Layout from './pages/Layout';
 import AddAccount from './pages/AddAccount';
 import functions from './pages/functions';

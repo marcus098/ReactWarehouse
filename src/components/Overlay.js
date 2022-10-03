@@ -161,10 +161,12 @@ export default class Overlay extends React.Component{
                         if(this.state.orderButton==false){
                             this.setState({orderButton: true}, () => { 
                                 console.log("order true");
+                                //this.props.addToCart(this.props.product.id, this.props.product.name, this.props.product.priceSell);
                             });
                         }else{
                             this.setState({orderButton: false}, () => { 
                                 console.log("order false");
+                                //this.props.addToCart(this.props.product.id, this.props.product.name, this.props.product.priceSell);
                             });
                         }
                     }}>
@@ -173,15 +175,8 @@ export default class Overlay extends React.Component{
                 );
                 var buttonSell = (
                     <Button onClick={() => {
-                        if(this.state.sellButton==false){
-                            this.setState({sellButton: true}, () => { 
-                                console.log("sell true");
-                            });
-                        }else{
-                            this.setState({sellButton: false}, () => { 
-                                console.log("sell false");
-                            });
-                        }
+                        this.props.addToCart(this.props.product.id, this.props.product.name, this.props.product.priceSell);
+                        this.props.handler();
                     }}>
                         Vendi
                     </Button>

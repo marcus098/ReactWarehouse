@@ -14,6 +14,7 @@ class Logout extends React.Component{
         if(this.state.userToken=="" || this.state.userToken == null){
             window.location.replace(`http://localhost:3000/login`);
         }
+      window.sessionStorage.removeItem("productsCart");
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

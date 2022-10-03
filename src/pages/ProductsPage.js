@@ -139,6 +139,10 @@ export default class ProductsPage extends React.Component{
                     type="product"
                     handler={this.closeOverlay}
                     product={this.state.product}
+                    sell={this.props.sell}
+                    emptyCart={this.props.emptyCart}
+                    modifyQuantity={this.props.modifyQuantity}
+                    addToCart={this.props.addToCart}
                 />
             );
         }

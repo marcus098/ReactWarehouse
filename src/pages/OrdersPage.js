@@ -74,7 +74,7 @@ export default class OrdersPage extends React.Component{
             if(this.state.loading==false){
                 return(
                     <div className="OrdersPage">
-                         overlayElement
+                         
                         <div className="row">
                             <div className="pageTitle">Lista Ordini</div>
                         </div>

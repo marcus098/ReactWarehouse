@@ -57,6 +57,7 @@ class Login extends React.Component{
         if(content.accessToken != "0"){
             this.setState({usrTokn: content.accessToken});
             sessionStorage.setItem("userToken", content.accessToken);
+            window.sessionStorage.removeItem("productsCart");
             window.location.replace(`http://localhost:3000/home`);
         }
     }catch(err){
