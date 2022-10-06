@@ -50,9 +50,10 @@ class Login extends React.Component{
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({email: this.state.email, password: this.state.password})
+            body: JSON.stringify({email: this.refs.email.value, password: this.refs.password.value})
         });
         const content = await rawResponse.json();
+        console.log(content);
         this.setState({errorMsg: content.message})
         if(content.accessToken != "0"){
             this.setState({usrTokn: content.accessToken});
@@ -66,26 +67,6 @@ class Login extends React.Component{
 }
 
 render(){
-    
-    /*if(this.state.isLoading==true){
-        return (
-            <div>
-        <div>Waiting</div>
-        {this.state.errorFetch}
-        </div>
-        );
-    }else {*/
-    /*<div className='login'>
-               <p className='error'> {this.state.errorFetch}</p>
-            <p className='error'>{this.state.errorMsg}</p>
-            <form onSubmit={this.handleSubmit}>
-            <div>Email: </div>
-            <input type="text" onChange={(e) => this.setState({email: e.target.value})} required></input>
-            <div>Password: </div>
-            <input type="password" onChange={(e) => this.setState({password: e.target.value})} required></input>
-            <br></br>
-            <input className='submit' type="submit" value="Accedi"></input>
-            </form>*/
         return(
             <section className="user">
   <div className="user_options-container">
@@ -99,14 +80,15 @@ render(){
     
     <div className="user_options-forms" id="user_options-forms">
       <div className="user_forms-login">
+              <p className='error'> {this.state.errorMsg}</p>
         <h2 className="forms_title">Login</h2>
         <form className="forms_form" onSubmit={this.handleSubmit}>
           <fieldset className="forms_fieldset">
             <div className="forms_field">
-              <input type="email" placeholder="Email" className="forms_field-input loginInput" onChange={(e) => this.setState({email: e.target.value})} required autoFocus />
+              <input type="email" placeholder="Email" ref="email" className="forms_field-input loginInput" required autoFocus />
             </div>
             <div className="forms_field">
-              <input type="password" placeholder="Password" className="forms_field-input loginInput" onChange={(e) => this.setState({password: e.target.value})} required />
+              <input type="password" placeholder="Password" ref="password" className="forms_field-input loginInput" required />
             </div>
           </fieldset>
           <div className="forms_buttons">

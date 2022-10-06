@@ -1,0 +1,300 @@
+$primary: hsl(242, 29%, 36%)
+$secondary: hsl(242, 3%, 90%)
+$primary-text-color: $primary
+$secondary-text-color: darken(desaturate($primary, 20%), 10%)
+$gradient-color__1: #242348
+$gradient-color__2: #5A55AA
+
+$input-border-color: $secondary
+$input-border-color__hover: lighten($primary, 30%)
+$input-border-color__focus: $primary
+
+$button-text-color: #FFF
+$button-color: $primary
+$button-color__hover: lighten($button-color, 16%)
+$button-color__focus: darken($button-color, 8%)
+
+$bg-color: hsl(0, 0, 98%)
+
+*, *::before, *::after
+  box-sizing: border-box
+
+h1
+  font-size: 2.5em
+  font-weight: bold
+  
+input, button
+  appearance: none
+  outline: none
+
+=placeholder()
+  &::-webkit-input-placeholder
+    @content
+  &::-moz-placeholder
+    @content
+  &:-moz-placeholder
+    @content
+  &:-ms-input-placeholder
+    @content
+=autofill()
+  &:-webkit-autofill
+    @content
+
+input
+  +placeholder()
+    color: transparent
+    user-select: none
+  +autofill()
+    -webkit-box-shadow: 0 0 0 100px #fff inset
+    -webkit-text-fill-color: inherit
+    
+.input
+  flex: 1
+  width: 100%
+  transition: width .18s ease
+  &__container
+    display: flex
+    flex-direction: column
+    position: relative
+    height: 40px
+    width: 100%
+    &.error
+      height: auto
+      pre
+        padding: 8px 8px 0
+  &__label
+    position: absolute
+    padding: 0 8px
+    top: 0
+    color: $secondary-text-color
+    cursor: text
+    font-size: 16px
+    transition-property: top, font-size
+    transition-timing-function: linear
+    transition-duration: .18s
+  &__field
+    background: transparent
+    border: 0px solid $input-border-color
+    border-bottom-width: 2px
+    padding: 6px 8px
+    font-size: 16px
+    transition: border .28s ease-out
+    &:required
+      + .input__label:after
+        content: '*'
+        color: red
+    &:focus, &:not(:placeholder-shown)
+      border-color: $input-border-color__focus
+      & + .input__label
+        font-size: 14px
+        top: -16px
+  &:hover
+    .input__field:placeholder-shown:not(:focus)
+      border-color: $input-border-color__hover
+    
+.errorInput
+    border-color: red
+.input-checkbox
+  &__field
+    position: absolute
+    height: 18px
+    width: 18px
+    margin: 0
+    cursor: pointer
+    opacity: 0
+    z-index: 1
+  &__container
+    display: flex
+    flex-direction: row
+    align-items: center
+  &__label
+    padding: 0 16px
+    color: $secondary-text-color
+    cursor: pointer
+    font-size: 16px
+    line-height: 1.25
+  &__square
+    display: flex
+    align-items: center
+    justify-content: center
+    position: relative
+    height: 18px
+    width: 18px
+    border: 1px solid darken($input-border-color, 12%)
+    border-radius: 4px
+    will-change: border, box-shadow
+    transition: border .28s ease-out, box-shadow .28s ease-out
+    z-index: 0
+    &::before, &::after
+      content: ''
+      display: inline-block
+      width: 2px
+      background: $input-border-color
+      border-radius: 2px
+      transition: background .28s ease-out
+    &::before
+      height: 4px
+      transform: rotate(-40deg) translate3d(-1.5px, 0px, 0)
+    &::after
+      height: 8px
+      transform: rotate(40deg)
+  &:hover .input-checkbox__square
+    &::before, &::after
+      background: $input-border-color__focus
+  &__field
+    &:focus, &:checked
+      & + .input-checkbox__square
+        &::before, &::after
+          background: $input-border-color__focus
+    &:hover + .input-checkbox__square
+      box-shadow: 0 1px 6px rgba(#000, 0.32)
+    &:focus + .input-checkbox__square
+      box-shadow: 0 2px 12px rgba(#000, 0.32)
+    &:checked + .input-checkbox__square
+      border-color: $input-border-color__focus
+
+.btn
+  border: none
+  border-radius: 4px
+  font-size: 18px
+  cursor: pointer
+  will-change: background, box-shadow
+  transition: background .28s ease-out, box-shadow .28s ease-out
+  &--regular, &--line
+    padding: 16px 56px
+  &--disabled
+    opacity: .4
+    pointer-events: none
+  
+.component--primary
+  .btn
+    &:disabled
+      opacity: 0.7
+      pointer-events: none
+  .btn--regular
+    background-color: $button-color
+    color: $button-text-color
+    &:hover
+      background-color: $button-color__hover
+      box-shadow: 0 2px 6px rgba(#000, 0.3)
+    &:focus, &:active
+      background-color: $button-color__focus
+      box-shadow: 0 4px 16px rgba(#000, 0.3)
+    &:disabled
+      background-color: desaturate($button-color, 30%)
+    
+.link
+  text-decoration: none
+  color: $primary-text-color
+  display: inline-block
+  text-decoration: underline
+  transition: color .28s ease-out
+  &:hover
+    color: darken($primary-text-color, 24%)
+  
+=breackpoint-min($point)
+  @media screen and (min-width: $point)
+    @content
+    
+=breackpoint-max($point)
+  @media screen and (max-width: $point)
+    @content
+    
+=breackpoint-min-max($point-min, $point-max)
+  @media screen and (min-width: $point-min) and (max-width: $point-max)
+    @content
+    
+.form
+  max-width: 400px
+  width: 100%
+  margin: 0 auto
+  &__row
+    margin-bottom: 40px
+    &--two
+      margin: 0 -16px 0px
+      +breackpoint-min(500px)
+        display: flex
+  &__inline-input
+    padding: 0 16px
+    margin-bottom: 40px
+    +breackpoint-min(500px)
+      width: 50%
+      flex: 1 0 auto
+  &__button
+    text-align: center
+    
+.sign-up
+  min-height: 100vh
+  &__container
+    display: flex
+    flex-flow: row nowrap
+    height: 100%
+  &__image, &__content
+    flex: 1
+  &__image
+    display: none
+    background-image: linear-gradient(210deg, $gradient-color__1, $gradient-color__2 )
+    position: relative
+    overflow: hidden
+    svg
+      width: 100%
+      height: 100%
+      bottom: 0
+      top: 0
+      position: absolute
+    +breackpoint-min(1000px)
+      display: block
+  &__content
+    display: flex
+    flex-flow: column nowrap
+    align-items: center
+    background-color: $bg-color
+  &__header
+    margin-bottom: 48px
+    text-align: center
+  &__title
+    margin-bottom: 16px
+    color: $primary-text-color
+  &__descr
+    font-size: 1.25rem
+    color: fade-out($primary-text-color, 0.6)
+  &__form
+    width: 100%
+  &__sign, &__terms
+    text-align: center
+    margin-bottom: 20px
+  &__sign
+    margin-top: -8px
+  &__terms
+    margin-top: 80px
+    
+.chart
+  .a
+    fill: url(#a)
+  .b
+    clip-path: url(#b)
+  .c
+    opacity: 0.201
+  .d,.g
+    opacity: 0.7
+  .d
+    fill: url(#c)
+  .e,.h,.k
+    fill: none
+  .e
+    stroke: #a3a0fb
+  .e,.f,.h,.i
+    stroke-width: 2px
+  .f,.i
+    fill: #fff
+  .f
+    stroke: #a4a1fb
+  .g
+    fill: url(#e)
+  .h
+    stroke: #54d8ff
+  .i
+    stroke: #55d8fe
+  .j
+    stroke: none
+

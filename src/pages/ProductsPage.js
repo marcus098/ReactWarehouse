@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import ArrowPages from "../components/ArrowPages";
@@ -7,8 +6,8 @@ import { Button } from "react-bootstrap";
 import Product from "../components/Product";
 import Overlay from "../components/Overlay";
 import AddProduct from "./AddProduct";
-import { registerables } from "chart.js";
 import '../css/SearchBar.scss';
+import Loading from "../components/Loading";
 
 export default class ProductsPage extends React.Component{
     constructor(props){
@@ -28,19 +27,36 @@ export default class ProductsPage extends React.Component{
             filter: false,
             textSearch: '',
             arrow:false,
-            addProduct:false
+            addProduct:false,
+            idSupplier:this.checkSupplier()
         };
         this.handler = this.handler.bind(this);
     }
+
+    checkSupplier = () => {
+        var urlParams = window.location.search;
+        var arr = urlParams.split("=");
+        var val = 0;
+        if(arr[1]!=null){
+            this.setState({idSupplier:arr[1]});
+            val = arr[1];
+        }
+        return val;
+    }
     
     componentDidMount() {
-       // if(this.state.data.length==0){
-            this.searchCategories();
-       // }
+        this.checkSupplier();
+        this.searchCategories();
     }
     
     searchCategories = async () => {
-        await axios.get("http://localhost:8081/api/categories")
+       /* var str = "";
+        if(idSupplier == 0){
+            str = "http://localhost:8081/api/categories";
+        }else{
+            str = "http://localhost:8081/api/categoriesSupplier/"+idSupplier;
+        }*/
+        await axios.get("http://localhost:8081/api/categories/"+this.state.idSupplier)
         .then((response) => {
             this.setState({categories: response.data});
             this.setState({totalPages: Math.ceil(response.data.length/20)});
@@ -61,13 +77,8 @@ export default class ProductsPage extends React.Component{
     
     searchProducts = (nameSearch) => {
         this.setState({textSearch: nameSearch});
-
         if(nameSearch != ''){
-            var url = "http://localhost:8081/api/products/"+nameSearch;
-            console.log(this.state.filter);
-            console.log("min: " + this.state.min);
-            console.log("max: " + this.state.max);
-            console.log("search: " + this.state.textSearch + "- " +nameSearch);
+            var url = "http://localhost:8081/api/products/"+nameSearch+"/"+this.state.idSupplier;
             if(this.state.filter == true){
                 url += "/"+this.state.min;
                 if(this.state.max != -1){
@@ -117,7 +128,7 @@ export default class ProductsPage extends React.Component{
     }
     
     loadProductsCategory = (idCategory) => {
-        var url = "http://localhost:8081/api/productscat/" + idCategory;
+        var url = "http://localhost:8081/api/productscat/" + idCategory+"/"+this.state.idSupplier;
         axios.get(url)
         .then((response) => {
             if(response.data.length != 0){
@@ -303,7 +314,7 @@ export default class ProductsPage extends React.Component{
 
                                     );
                                 }else {
-                                    return (<div>Caricamento</div>)
+                                    return (<Loading></Loading>)
                                 }
                             } 
                         }

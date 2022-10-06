@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import ArrowPages from "../components/ArrowPages";
@@ -79,7 +78,7 @@ export default class OrdersPage extends React.Component{
                             <div className="pageTitle">Lista Ordini</div>
                         </div>
                         <div className="row">
-                            <div className="col-lg-4 col-md-4 col-sm-8 col-8 add"><Button>Aggiungi Ordine</Button></div>
+                           {/* <div className="col-lg-4 col-md-4 col-sm-8 col-8 add"><Button>Aggiungi Ordine</Button></div>*/}
                         </div>
                         <div className="row">
                             <div className="col-lg-1 col-md-1 col-sm-1 col-1">ID</div>

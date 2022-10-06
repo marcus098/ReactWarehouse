@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import ArrowPages from "../components/ArrowPages";
@@ -24,7 +23,8 @@ export default class AddProduct extends React.Component{
             priceSupplier:0,
             supplierName:'',
             count:0,
-            suplliersToSave:[]
+            suplliersToSave:[],
+            backButton:true
         }
     }
 
@@ -47,17 +47,13 @@ export default class AddProduct extends React.Component{
     }
 
     saveProduct = () => {
-        console.log("Entro qui dentro");
-        console.log(this.state);
         if(this.state.idSupplier!=0 && this.state.priceSupplier!=0 && this.state.idSupplier!="" && this.state.priceSupplier!=""){
-            console.log("Primo if");
             this.setState({
                 count: this.state.count+1,
                 suppliersToSave: this.state.suplliersToSave.push({idSupplier: this.state.idSupplier, priceSupplier: this.state.priceSupplier})
             });
         }
         if(this.state.name != "" && this.state.quantity != "" && this.state.priceSell != ""){
-            console.log("Secondo if");
             axios.post('http://localhost:8081/api/products/add', {
             name: this.state.name,
             priceSell: this.state.priceSell,
@@ -67,7 +63,7 @@ export default class AddProduct extends React.Component{
             suppliersToSave: this.state.suplliersToSave,
           })
           .then((response) => {
-            console.log(response.data);
+           
             this.setState({
                 name: "",
                 priceSell: "",
@@ -76,7 +72,9 @@ export default class AddProduct extends React.Component{
                 count: 0,
                 suppliersToSave: [],
                 idSupplier: 0,
-                supplierName: ""
+                supplierName: "",
+                supplierList:[],
+                backButton:true
             });
             this.refs.name.value = '';
             this.refs.priceSell.value = '';
@@ -93,13 +91,35 @@ export default class AddProduct extends React.Component{
         }
     }
 
+    addOtherProduct = () =>{
+      this.saveProduct();
+      this.refs.back.click();
+    }
+
+    addOtherSupplier = () => {
+      
+      if(this.state.idSupplier != 0 && this.state.priceSupplier != 0 && this.state.idSupplier != "" && this.state.priceSupplier != ""){
+        this.setState({
+            count: this.state.count + 1,
+            suppliersToSave: this.state.suplliersToSave.push({idSupplier: this.state.idSupplier, priceSupplier: this.state.priceSupplier}),
+            idSupplier: 0,
+            supplierName: 0,
+            supplierList: [],
+            backButton: false
+          });
+        this.refs.supplierValues.value = '';
+        this.refs.priceSupplier.value = '';
+        this.refs.supplierName.value = '';
+    }
+    }
+
     render(){
         var progressbar;
         progressbar = (
-            <ul id="progressbar">
-                  <li class="active">Informazioni generali</li>
-                  <li>Fornitore</li>
-                </ul>
+          <ul id="progressbar">
+            <li class="active">Informazioni generali</li>
+            <li>Fornitore</li>
+          </ul>
         );
         var step;
         step = (
@@ -107,12 +127,17 @@ export default class AddProduct extends React.Component{
 <></>
         );
         var optionSupplier = [];
-        console.log(this.state);
         if(this.state.supplierList.length!=0){
             //this.setState(this.setState({idSupplier: this.state.supplierList[0].id}));
             this.state.supplierList.map((supplier) => {
                 optionSupplier.push(<option value={supplier.id}>{supplier.name}</option>)
             });
+        }
+        var backButton = (<></>);
+        if(this.state.backButton){
+        backButton = (
+          <input type="button" ref="back" onClick={(e) => console.log("Ciao")} value="Indietro" class="previous action-button"></input>
+        );
         }
         return(
                 <form id="msformProduct">
@@ -124,7 +149,7 @@ export default class AddProduct extends React.Component{
                   <input type="number" ref="quantity" placeholder="Quantita'" onChange={(e) => this.setState({quantity: e.target.value})} required />
                   <input type="text" ref="priceSell" placeholder="Prezzo Di Vendita" onChange={(e) => this.setState({priceSell: e.target.value})} required />
                   <textarea placeholder="Descrizione" ref="description" onChange={(e) => this.setState({description: e.target.value})}></textarea>
-                  <input type="button" class="next action-button" onClick={(e) => e.preventDefault()} value="Salva" />
+                  <input type="button" class="next action-button" onClick={(e) => e.preventDefault()} value="Continua" />
                 </fieldset>
 
                 <fieldset>
@@ -134,9 +159,9 @@ export default class AddProduct extends React.Component{
                     {optionSupplier}
                   </select>
                   <input type="number" ref="priceSupplier" onChange={(e) => this.setState({priceSupplier: e.target.value})} placeholder="Costo acquisto" required />
-                  <input type="button" onClick={(e) => {console.log("Ciao")}} value="Indietro" class="previous action-button"></input>
-                  <input type="button" class="action-button" onClick={(e) => e.preventDefault()} value="Aggiungi altro fornitore" />
-                    <input type="button" class="next action-button" onClick={(e) => e.preventDefault()} value="Salva e aggiungi un altro Prodotto" />
+                 {backButton}
+                  <input type="button" class="action-button" onClick={(e) => this.addOtherSupplier()} value="Aggiungi altro fornitore" />
+                    <input type="button" class="action-button" onClick={(e) => this.addOtherProduct()} value="Salva e aggiungi un altro Prodotto" />
                   <input type="button" class="action-button" onClick={(e) => {e.preventDefault(); this.saveProduct()}} value="Salva" />
                 </fieldset>
               </form>

@@ -83,3 +83,5 @@ $(".submit").click(function(){
 
 document.addEventListener("touchstart", function(){}, true);
 
+
+

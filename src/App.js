@@ -16,8 +16,10 @@ import AddCategory from './pages/AddCategory';
 import UsersControlPage from './pages/UsersControlPage';
 import ControlPanel from './pages/ControlPanel';
 import Layout from './pages/Layout';
+import SuppliersPage from './pages/SuppliersPage';
 import AddAccount from './pages/AddAccount';
-import functions from './pages/functions';
+import PositionPage from './pages/PositionPage';
+import AddSupplier from './pages/AddSupplier';
 
 function App() {
   return (
@@ -26,21 +28,25 @@ function App() {
     <Routes>
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Layout role="admin"><Home /></Layout>}></Route>
-        <Route path="/orders" element={<Layout role="admin"><OrdersPage /></Layout>}></Route>
-        <Route path="/products" element={<Layout role="admin"><ProductsPage /></Layout>}></Route>
-        <Route path="/account" element={<Layout role="admin"><AccountPage /></Layout>}></Route>
-        <Route path="/purchases" element={<Layout role="admin"><PurchasesPage /></Layout>}></Route>
-        <Route path="/account" element={<Layout role="admin"><AccountPage /></Layout>}></Route>
-        <Route path="/AddProduct" element={<Layout role="admin"><AddProduct /></Layout>}></Route>
-        <Route path="/AddOrder" element={<Layout role="admin"><AddOrder /></Layout>}></Route>
-        <Route path="/AddCategory" element={<Layout role="admin"><AddCategory /></Layout>}></Route>
-        <Route path="/usercontrol" element={<Layout role="admin"><UsersControlPage /></Layout>}></Route>
-        <Route path="/controlpanel" element={<Layout role="admin"><ControlPanel /></Layout>}></Route>
-        <Route path="/addaccount" element={<Layout role="admin"><AddAccount /></Layout>}></Route>
+        <Route path="/home" element={ <RequireAuth role=""><Layout role="admin"><Home /></Layout></RequireAuth>}></Route>
+        <Route path="/orders" element={<RequireAuth role=""><Layout role="admin"><OrdersPage /></Layout></RequireAuth>}></Route>
+        <Route path="/products" element={<RequireAuth role=""><Layout role="admin"><ProductsPage /></Layout></RequireAuth>}></Route>
+        <Route path="/account" element={<RequireAuth role=""><Layout role="admin"><AccountPage /></Layout></RequireAuth>}></Route>
+        <Route path="/purchases" element={<RequireAuth role=""><Layout role="admin"><PurchasesPage /></Layout></RequireAuth>}></Route>
+        <Route path="/account" element={<RequireAuth role=""><Layout role="admin"><AccountPage /></Layout></RequireAuth>}></Route>
+        <Route path="/AddProduct" element={<RequireAuth role=""><Layout role="admin"><AddProduct /></Layout></RequireAuth>}></Route>
+        <Route path="/AddOrder" element={<RequireAuth role=""><Layout role="admin"><AddOrder /></Layout></RequireAuth>}></Route>
+        <Route path="/AddCategory" element={<RequireAuth role=""><Layout role="admin"><AddCategory /></Layout></RequireAuth>}></Route>
+        <Route path="/usercontrol" element={<RequireAuth role=""><Layout role="admin"><UsersControlPage /></Layout></RequireAuth>}></Route>
+        <Route path="/suppliers" element={<RequireAuth role=""><Layout role="admin"><SuppliersPage /></Layout></RequireAuth>}></Route>
+        <Route path="/controlpanel" element={<RequireAuth role=""><Layout role="admin"><ControlPanel /></Layout></RequireAuth>}></Route>
+        <Route path="/addaccount" element={<RequireAuth role=""><Layout role="admin"><AddAccount /></Layout></RequireAuth>}></Route>
+        <Route path="/addSupplier" element={<RequireAuth role=""><Layout role="admin"><AddSupplier /></Layout></RequireAuth>}></Route>
+        <Route path="/position" element={<RequireAuth role=""><Layout role="admin"><PositionPage /></Layout></RequireAuth>}></Route>
         <Route path="/home2" element={
           <RequireAuth role="">
             <Home />
+            
           </RequireAuth>
           } 
         />
@@ -50,12 +56,7 @@ function App() {
           </RequireAuth>
           } 
         />
-      <Route path="/" element={
-        <RequireAuth role="">
-          <Home />
-        </RequireAuth>
-        } 
-        />
+      
       <Route path="/*" element={<Missing />} />
     </Routes>
   </div>

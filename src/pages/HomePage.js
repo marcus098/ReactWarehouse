@@ -5,6 +5,7 @@ import BarChart from "../components/BarChart";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import Loading from "../components/Loading";
 
 const baseURL = "http://localhost:8081/api"
 
@@ -171,7 +172,7 @@ export default class Home extends React.Component{
           </div>
             );
         }else{
-            return(<div>Caricamento</div>)
+            return(<Loading></Loading>)
         }
     }
     }

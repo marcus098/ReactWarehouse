@@ -1,10 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import User from "../components/User";
 
-class Home extends React.Component{
+export default class UsersControlPage extends React.Component{
     constructor(props){
         super(props);
         this.state={};
@@ -19,7 +18,7 @@ class Home extends React.Component{
                 surname={"surname"+i}
                 email={"email"+i}
                 phone={"phone"+i}
-                role={"phone"+i}
+                role={"ruolo"+i}
                 />
             );
         }
@@ -31,4 +30,3 @@ class Home extends React.Component{
         );
         }
     }
-    export default Home;

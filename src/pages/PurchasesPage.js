@@ -1,10 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import ArrowPages from "../components/ArrowPages";
-import { Button } from "react-bootstrap";
-import Order from "../components/Order";
 import Purchase from "../components/Purchase";
 import Overlay from "../components/Overlay";
 import '../css/Layout.css';

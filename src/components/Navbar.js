@@ -85,7 +85,6 @@ export class Navbar extends React.Component{
                             Ordini
                         </span>
                     </a>
-                   
                 </li>
                 <li>
                     <a href="/purchases">
@@ -108,11 +107,16 @@ export class Navbar extends React.Component{
                        <i class="fa fa-table fa-2x"></i>
                         <span class="nav-text">
                             Pannello Utenti
-                            
                         </span>
-                        
                     </a>
-                    
+                </li>
+                <li>
+                   <a href="/controlPanel">
+                       <i class="fa fa-table fa-2x"></i>
+                        <span class="nav-text">
+                            Controllo Generale
+                        </span>
+                    </a>
                 </li>
                 <li>
                    <a href="/automation">
@@ -126,7 +130,7 @@ export class Navbar extends React.Component{
 
             <ul class="logout">
                 <li>
-                   <a href="#">
+                   <a href="/logout">
                          <i class="fa fa-power-off fa-2x"></i>
                         <span class="nav-text">
                             Logout
