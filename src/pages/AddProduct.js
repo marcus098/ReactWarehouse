@@ -63,7 +63,6 @@ export default class AddProduct extends React.Component{
             suppliersToSave: this.state.suplliersToSave,
           })
           .then((response) => {
-           
             this.setState({
                 name: "",
                 priceSell: "",
@@ -165,11 +164,6 @@ export default class AddProduct extends React.Component{
                   <input type="button" class="action-button" onClick={(e) => {e.preventDefault(); this.saveProduct()}} value="Salva" />
                 </fieldset>
               </form>
-
-
-
-
-
 
 
         );

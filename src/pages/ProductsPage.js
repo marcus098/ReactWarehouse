@@ -293,29 +293,29 @@ export default class ProductsPage extends React.Component{
                             if(this.state.loading==false){
                                 return(
                                     <div className="OrdersPage">
-                                    {arrowElement}
-                                    {/*addProductButton*/}
-                                    {header}
-                                    <div className="row">
-                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2">ID</div>
-                                    <div className="col-lg-3 col-md-3 col-sm-3 col-3">Nome</div>
-                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2">Quantita'</div>
-                                    <div className="col-lg-3 col-md-3 col-sm-3 col-3">Prezzo vendita</div>
-                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2">Posizione</div>
-                                    </div>
-                                    {arrElements}
-                                    <div className="row arrowPages text-center">
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
-                                    <ArrowPages elements={this.state.data.length} currentPage={this.state.currantPage} handler={this.handler}></ArrowPages>
-                                    </div>
-                                    </div>
-                                    {overlayElements}
+                                        {arrowElement}
+                                        {/*addProductButton*/}
+                                        {header}
+                                        <div className="row">
+                                            <div className="col-lg-2 col-md-2 col-sm-2 col-2">ID</div>
+                                            <div className="col-lg-3 col-md-3 col-sm-3 col-3">Nome</div>
+                                            <div className="col-lg-2 col-md-2 col-sm-2 col-2">Quantita'</div>
+                                            <div className="col-lg-3 col-md-3 col-sm-3 col-3">Prezzo vendita</div>
+                                            <div className="col-lg-2 col-md-2 col-sm-2 col-2">Posizione</div>
+                                        </div>
+                                        {arrElements}
+                                        <div className="row arrowPages text-center">
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+                                                <ArrowPages elements={this.state.data.length} currentPage={this.state.currantPage} handler={this.handler}></ArrowPages>
+                                            </div>
+                                        </div>
+                                        {overlayElements}
                                     </div>
 
-                                    );
-                                }else {
-                                    return (<Loading></Loading>)
-                                }
-                            } 
-                        }
+                                );
+                            }else {
+                                return (<Loading></Loading>)
+                            }
+                        } 
                     }
+                }

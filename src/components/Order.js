@@ -26,11 +26,11 @@ export default class Order extends React.Component{
         axios.post('http://localhost:8081/api/orders/delete', {
             id:this.props.id
           })
-          .then(function (response) {
+          .then((response) => {
             if(response.data.bool){
                 this.setState({render: false});
             }else{
-                console.log("error");
+                //show error eliminazione non avvenuta
             }
           })
           .catch(function (error) {
@@ -39,6 +39,7 @@ export default class Order extends React.Component{
         }
 
     confirmOrderNewPosition = (namePosition, descriptionPosition) => {
+        console.log(namePosition, descriptionPosition);
         axios.post("http://localhost:8081/api/orders/confirmNew/"+this.props.id,{
             name:namePosition,
             description:descriptionPosition

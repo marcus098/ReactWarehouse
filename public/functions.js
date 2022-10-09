@@ -28,7 +28,9 @@ $(".next").click(function(){
 			opacity = 1 - now;
 			current_fs.css({
         'transform': 'scale('+scale+')',
-        'position': 'absolute'
+        'position': 'absolute',
+		'width': '100%',
+		'justify-content': 'center'
       });
 			next_fs.css({'left': left, 'opacity': opacity});
 		}, 

@@ -4,6 +4,7 @@ import '../css/AddAccount.css';
 import "./functions";
 import {Helmet} from "react-helmet";
 import $ from "jquery";
+import axios from "axios";
 
 export default class AddAccount extends React.Component{
     constructor(props){
@@ -47,12 +48,22 @@ export default class AddAccount extends React.Component{
           this.checkFill(this.refs.email) && 
           this.checkFill(this.refs.password) && 
           this.checkPassword()){
-
-        console.log("Aggiungo");
-        console.log(this.refs.role.value);
-        
-
-      }
+            axios.post('http://localhost:8081/api/user/add', {
+              name: this.state.name,
+              email: this.state.email,
+              phone: this.state.phone,
+              api: this.state.api
+            })
+            .then((response) => {
+              console.log(response);
+              if(response){
+                window.location.replace(`http://localhost:3000/userControl`);
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+           });
+        }
     }
 
     render(){

@@ -5,6 +5,7 @@ import ArrowPages from "../components/ArrowPages";
 import { Button } from "react-bootstrap";
 import Order from "../components/Order";
 import Overlay from "../components/Overlay";
+import Loading from "../components/Loading";
 
 export default class OrdersPage extends React.Component{
     constructor(props){
@@ -38,7 +39,9 @@ export default class OrdersPage extends React.Component{
             if(response.data.length!=0)
                 this.setState({loading: false});
         })
-        .catch(console.log("errore"));
+        .catch(
+            this.setState({loading:false})
+            );
     }
     
     handler(value) {
@@ -101,7 +104,7 @@ export default class OrdersPage extends React.Component{
                     </div>
                     );
                 }else {
-                    return (<div>Caricamento</div>)
+                    return (<Loading></Loading>)
                 }
             } 
         }

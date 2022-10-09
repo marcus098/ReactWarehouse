@@ -5,6 +5,7 @@ import ArrowPages from "../components/ArrowPages";
 import Purchase from "../components/Purchase";
 import Overlay from "../components/Overlay";
 import '../css/Layout.css';
+import Loading from "../components/Loading";
 
 export default class PurchasesPage extends React.Component{
     constructor(props){
@@ -110,7 +111,7 @@ export default class PurchasesPage extends React.Component{
                     </div>
                     );
                 }else {
-                    return (<div>Caricamento</div>)
+                    return (<Loading></Loading>)
                 }
             } 
         }

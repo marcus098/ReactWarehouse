@@ -28,7 +28,6 @@ class Layout extends React.Component {
     }
 
     sell = () =>{
-      console.log("sell");
       var storedArray = JSON.parse(sessionStorage.getItem("productsCart"));
       axios.post('http://localhost:8081/api/sell', {
             list: storedArray

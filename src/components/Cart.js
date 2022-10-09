@@ -17,7 +17,6 @@ export class Cart extends React.Component{
     }
 
     toggle() {
-        console.log(this.props);
         if(this.state.classCart==""){
         this.setState({
           toggle: !this.state.toggle,

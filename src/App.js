@@ -20,6 +20,7 @@ import SuppliersPage from './pages/SuppliersPage';
 import AddAccount from './pages/AddAccount';
 import PositionPage from './pages/PositionPage';
 import AddSupplier from './pages/AddSupplier';
+import Unauthorized from './pages/Unauthorized';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
     <Routes>
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/home" element={ <RequireAuth role=""><Layout role="admin"><Home /></Layout></RequireAuth>}></Route>
         <Route path="/orders" element={<RequireAuth role=""><Layout role="admin"><OrdersPage /></Layout></RequireAuth>}></Route>
         <Route path="/products" element={<RequireAuth role=""><Layout role="admin"><ProductsPage /></Layout></RequireAuth>}></Route>

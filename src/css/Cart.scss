@@ -53,7 +53,7 @@ nav {
 .containerCart {
     position: absolute;
   margin: auto;
-  z-index:1000;
+  z-index:101;
   width: 98%;
 }
 
@@ -171,15 +171,20 @@ nav {
        opacity: 0;
     }
  }
- 
+
+ .zindex101{
+  z-index: 101;
+ }
+
  .fade-in {
    opacity: 0;
    height:0;
-   z-index:100;
+   z-index:101;
    animation: fadeIn ease-in 1;
    animation-fill-mode: forwards;
    animation-duration: 1s;
  }
  .fade-rapid {
     opacity: 0;
+    z-index: 100;
   }
