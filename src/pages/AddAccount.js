@@ -9,11 +9,12 @@ import axios from "axios";
 export default class AddAccount extends React.Component{
     constructor(props){
         super(props);
-        this.state={
-          formCompiled:false,
+        this.state = {
+          formCompiled: false,
         }
     }
-    componentDidMount () {
+
+      componentDidMount () {
         const script = document.createElement("script");
         script.src = "./functions.js";
         script.async = true;
@@ -42,22 +43,27 @@ export default class AddAccount extends React.Component{
     }
 
     AddUser = () => {
-      console.log(this.refs);
       if(this.checkFill(this.refs.name) && 
           this.checkFill(this.refs.surname) && 
           this.checkFill(this.refs.email) && 
           this.checkFill(this.refs.password) && 
+          this.checkFill(this.refs.phone) &&
           this.checkPassword()){
             axios.post('http://localhost:8081/api/user/add', {
-              name: this.state.name,
-              email: this.state.email,
-              phone: this.state.phone,
-              api: this.state.api
+              userToken: localStorage.getItem("userToken"),
+              name: this.refs.name.value,
+              surname: this.refs.surname.value,
+              email: this.refs.email.value,
+              phone: this.refs.phone.value,
+              password: this.refs.password.value,
+              role:this.refs.role.value
             })
             .then((response) => {
               console.log(response);
-              if(response){
+              if(response.data.bool){
                 window.location.replace(`http://localhost:3000/userControl`);
+              }else{
+                //show error message
               }
             })
             .catch(function (error) {
@@ -120,7 +126,9 @@ export default class AddAccount extends React.Component{
                       <div class="input__container">
                         <select class="input__field" id="role" ref="role">
                           <option value="1">Amministratore</option>
-                          <option value="2">Ruolo1</option>
+                          <option value="2">Addetto Alle Vendite</option>
+                          <option value="3">Addetto Agli Ordini</option>
+                          <option value="4">Gestore Utenti</option>
                         </select>
                         <label class="input__label" for="role">
                           Ruolo

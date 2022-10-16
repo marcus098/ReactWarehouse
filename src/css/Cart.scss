@@ -11,6 +11,7 @@ $light-text: #ABB0BE;
 
 body {
   font: 14px/22px "Lato", Arial, sans-serif;
+  background-color: #e7e5e5;
 }
 
 .lighter-text {
@@ -23,7 +24,10 @@ body {
 
 nav {
   padding: 0px 0 40px 0;
-  background: #F8F8F8;
+  //background: #F8F8F8;
+  //background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(231,229,229,1) 100%);
+  background: rgb(231,229,229);
+  background: linear-gradient(0deg, rgba(231,229,229,1) 0%, rgba(247,246,246,1) 30%, rgba(255,255,255,1) 100%);
   font-size: 16px;
   
   .navbar-left {
@@ -32,6 +36,7 @@ nav {
   
   .navbar-right {
     float: right;
+    padding-top:8px
   }
   ul {
     
@@ -54,7 +59,8 @@ nav {
     position: absolute;
   margin: auto;
   z-index:101;
-  width: 98%;
+  width: 200px;
+  right:20px
 }
 
 .badge {
@@ -133,6 +139,8 @@ nav {
 	border-width: 8px;
 	margin-left: -8px;
 }
+
+
 
 .cart-icon {
   color: #515783;

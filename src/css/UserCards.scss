@@ -75,12 +75,12 @@ $bottom_box_bg : #F5F5F5;
       }
 
       .profile{
-        width: 80px;
-        height: 180px;
+        /*width: 80px;
+        height: 180px;*/
         border: 4px solid white;
         box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
         border-radius: 45%;
-        background-image: url("https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=");
+        //background-image: url("https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=");
         z-index: 2;
         background-repeat: no-repeat;
         background-size: cover;
@@ -191,9 +191,6 @@ $blue: #3F708A;
 $natural: #0073e6;
 
 *{box-sizing: border-box; margin:0;}
-body{
-  background-color: #f2f2f2; 
-  font-family:'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;}
 
 .user-grid{
     margin:3rem auto;

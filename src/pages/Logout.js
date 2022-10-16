@@ -4,7 +4,7 @@ class Logout extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            userToken: sessionStorage.getItem("userToken")
+            userToken: localStorage.getItem("userToken")
         };
         this.deleteToken();
     }
@@ -14,17 +14,17 @@ class Logout extends React.Component{
         if(this.state.userToken=="" || this.state.userToken == null){
             window.location.replace(`http://localhost:3000/login`);
         }
-      window.sessionStorage.removeItem("productsCart");
+      localStorage.removeItem("productsCart");
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ value: sessionStorage.getItem("userToken") })
+            body: JSON.stringify({ value: localStorage.getItem("userToken") })
         };
         fetch('http://localhost:8081/api/logout', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if(data==0){
-                    sessionStorage.removeItem("userToken");
+                    localStorage.removeItem("userToken");
                     window.location.replace(`http://localhost:3000/login`);
                 }
             });

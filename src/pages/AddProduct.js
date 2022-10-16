@@ -55,6 +55,7 @@ export default class AddProduct extends React.Component{
         }
         if(this.state.name != "" && this.state.quantity != "" && this.state.priceSell != ""){
             axios.post('http://localhost:8081/api/products/add', {
+            userToken: localStorage.getItem("userToken"),
             name: this.state.name,
             priceSell: this.state.priceSell,
             quantity: this.state.quantity,

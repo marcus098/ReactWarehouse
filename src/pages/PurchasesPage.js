@@ -6,6 +6,7 @@ import Purchase from "../components/Purchase";
 import Overlay from "../components/Overlay";
 import '../css/Layout.css';
 import Loading from "../components/Loading";
+import { support } from "jquery";
 
 export default class PurchasesPage extends React.Component{
     constructor(props){
@@ -44,6 +45,7 @@ export default class PurchasesPage extends React.Component{
     doFetch = async () => {
         await axios.get("http://localhost:8081/api/purchases")
         .then((response) => {
+            console.log(response.data);
             this.setState({data: response.data});
             this.setState({totalPages: Math.ceil(response.data.length/20)});
             if(response.data.length!=0)
@@ -69,6 +71,7 @@ export default class PurchasesPage extends React.Component{
                     purchase={this.state.purchase}
                 />
             );
+            this.props.hideRowContent();
         }
         var arrElements = [];
         if(this.state.data.length!=0){
@@ -93,7 +96,10 @@ export default class PurchasesPage extends React.Component{
             if(this.state.loading==false){
                 return(
                     <div className="PurchasesPage">
-                        <div className="row">
+                        <div className="row pageTitle">
+                            Vendite
+                        </div>
+                        <div className="row headerPurchasesPage">
                             <div className="col-lg-2 col-md-2 col-sm-2 col-2">ID</div>
                             <div className="col-lg-2 col-md-2 col-sm-2 col-2">descrizione</div>
                             <div className="col-lg-2 col-md-2 col-sm-2 col-2">Quantita</div>

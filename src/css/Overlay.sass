@@ -7,14 +7,14 @@ $gradient-color__2: #5A55AA
 
 $input-border-color: $secondary
 $input-border-color__hover: lighten($primary, 30%)
-$input-border-color__focus: $secondary
+$input-border-color__focus: $primary
 
 $button-text-color: #FFF
-$button-color: $secondary
+$button-color: $primary
 $button-color__hover: lighten($button-color, 16%)
 $button-color__focus: darken($button-color, 8%)
 
-$bg-color: #e7e5e5
+$bg-color: hsl(0, 0, 98%)
 
 *, *::before, *::after
   box-sizing: border-box
@@ -52,7 +52,7 @@ input
   flex: 1
   width: 100%
   transition: width .18s ease
-  &__container
+  &__container_overlay
     display: flex
     flex-direction: column
     position: relative
@@ -62,40 +62,38 @@ input
       height: auto
       pre
         padding: 8px 8px 0
-  &__label
+  &__label_overlay
     position: absolute
     padding: 0 8px
     top: 0
-    color: $secondary-text-color
+    color: color
     cursor: text
     font-size: 16px
     transition-property: top, font-size
     transition-timing-function: linear
     transition-duration: .18s
-  &__field
+  &__field_overlay
     background: transparent
-    border: 0px solid $input-border-color
-    border-bottom-width: 2px
     padding: 6px 8px
     font-size: 16px
     transition: border .28s ease-out
     &:required
-      + .input__label:after
+      + .input__label_overlay:after
         content: '*'
         color: red
     &:focus, &:not(:placeholder-shown)
-      border-color: $input-border-color__focus
-      & + .input__label
+      border-color: transparent
+      & + .input__label_overlay
         font-size: 14px
         top: -16px
   &:hover
-    .input__field:placeholder-shown:not(:focus)
-      border-color: $input-border-color__hover
+    .input__field_overlay:placeholder-shown:not(:focus)
+      border-color: silver
     
 .errorInput
     border-color: red
 .input-checkbox
-  &__field
+  &__field_overlay
     position: absolute
     height: 18px
     width: 18px
@@ -103,13 +101,13 @@ input
     cursor: pointer
     opacity: 0
     z-index: 1
-  &__container
+  &__container_overlay
     display: flex
     flex-direction: row
     align-items: center
-  &__label
+  &__label_overlay
     padding: 0 16px
-    color: $secondary-text-color
+    color: white
     cursor: pointer
     font-size: 16px
     line-height: 1.25
@@ -120,7 +118,7 @@ input
     position: relative
     height: 18px
     width: 18px
-    border: 1px solid darken($input-border-color, 12%)
+    border: 1px solid darken(white, 12%)
     border-radius: 4px
     will-change: border, box-shadow
     transition: border .28s ease-out, box-shadow .28s ease-out
@@ -141,7 +139,7 @@ input
   &:hover .input-checkbox__square
     &::before, &::after
       background: $input-border-color__focus
-  &__field
+  &__field_overlay
     &:focus, &:checked
       & + .input-checkbox__square
         &::before, &::after
@@ -159,10 +157,7 @@ input
   .btn
     &:disabled
       opacity: 0.7
-      pointer-events: none 
-    &:hover
-      background:red
-    
+      pointer-events: none
   .btn--regular
     background-color: $button-color
     color: $button-text-color
@@ -172,9 +167,6 @@ input
       box-shadow: 0 4px 16px rgba(#000, 0.3)
     &:disabled
       background-color: desaturate($button-color, 30%)
-      &:hover
-      background:red
-   
     
 .link
   text-decoration: none
@@ -218,7 +210,7 @@ input
     
 .sign-up
   min-height: 100vh
-  &__container
+  &__container_overlay
     display: flex
     flex-flow: row nowrap
     height: 100%
@@ -291,12 +283,3 @@ input
   .j
     stroke: none
 
-.descriptionAccount 
-  font-size: 20px
-  display: flex
-  justify-content: center
-  align-content: space-around
-
-  .row
-    align-content: space-around
-  

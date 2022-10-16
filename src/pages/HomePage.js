@@ -5,8 +5,10 @@ import BarChart from "../components/BarChart";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import ButtonSave from "../components/Elements/ButtonSave";
 import Loading from "../components/Loading";
-
+import '../css/Layout.scss';
+import CircleMenu from "../components/Elements/CircleMenu";
 const baseURL = "http://localhost:8081/api"
 
 export default class Home extends React.Component{
@@ -15,19 +17,10 @@ export default class Home extends React.Component{
         this.state={
             generalMonthsArray: new Array("Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"),
             actualMonthsArray:new Array("", "", "", "", "", "", "", "", "", "", "", ""),
-            //orderQuantityArray: new Array(700,433,30,244,400,300,400,900,100,234,233,456),
-           /* orderTotalArray: new Array(700,433,30,244,400,300,400,900,100,234,233,456),
-            sellTotalArray: new Array(700,433,30,244,400,300,400,900,100,23,233,456),
-            sellQuantityArray: new Array(100,200,300,150,180,300,400,900,100,234,233,456),*/
             orderQuantityArray: new Array(0,0,0,0,0,0,0,0,0,0,0,0),
             orderTotalArray: new Array(0,0,0,0,0,0,0,0,0,0,0,0),
             sellTotalArray: new Array(0,0,0,0,0,0,0,0,0,0,0,0),
             sellQuantityArray: new Array(0,0,0,0,0,0,0,0,0,0,0,0),
-
-            finalOrderQuantityArray: new Array(0,0,0,0,0,0,0,0,0,0,0,0),
-            finalOrderTotalArray: new Array(0,0,0,0,0,0,0,0,0,0,0,0),
-            finalSellTotalArray: new Array(0,0,0,0,0,0,0,0,0,0,0,0),
-            finalSellQuantityArray: new Array(0,0,0,0,0,0,0,0,0,0,0,0),
             orders: [],
             moreSell: '',
             moreOrder: '',
@@ -45,17 +38,20 @@ export default class Home extends React.Component{
     calculateData(){
         axios.all([
             axios.get('http://localhost:8081/api/orders/Months'), 
-            axios.get('http://localhost:8081/api/orders/Months'),
+            axios.get('http://localhost:8081/api/sells/Months'),
           ])
           .then(axios.spread((response1, response2) => {
             var arrTmp = [];
             var date = new Date(); 
             var start = date.getMonth()+1; 
-            console.log(response1.data);
+            this.setState({charged: this.state.charged+1});
+            console.log("Charged: " + this.state.charged);
             for(var i = 0; i < 12; i++){
                 this.setState({
-                    orderTotalArray: this.state.orderTotalArray.splice(i,1,response1.data[i].total),
-                    orderQuantityArray: this.state.orderQuantityArray.splice(i,1,response2.data[i].quantity),
+                    orderTotalArray: this.state.orderTotalArray.splice(i, 1, response1.data[i].total),
+                    orderQuantityArray: this.state.orderQuantityArray.splice(i, 1, response1.data[i].quantity),
+                    sellTotalArray: this.state.sellTotalArray.splice(i, 1, response2.data[i].total),
+                    sellQuantityArray: this.state.sellQuantityArray.splice(i, 1, response2.data[i].quantity),
                 });
             }
             
@@ -63,15 +59,12 @@ export default class Home extends React.Component{
                 if(start==12)
                     start = 0;
                 arrTmp.push(this.state.generalMonthsArray[start]);
-                this.setState({actualMonthsArray: this.state.actualMonthsArray.splice(i,1,this.state.generalMonthsArray[start])});
+                this.setState({actualMonthsArray: this.state.actualMonthsArray.splice(i, 1, this.state.generalMonthsArray[start])});
                 start++;
             }
-            console.log(this.state.orderQuantityArray);
-            console.log(this.state.orderTotalArray);
-            console.log(this.state.actualMonthsArray);
             this.setState({charged:this.state.charged+1});
           }))
-        .catch(this.setState({charged:this.state.charged+1}) );
+        .catch(this.setState({charged:this.state.charged + 1}) );
       
     }
 
@@ -95,7 +88,11 @@ export default class Home extends React.Component{
     }
    
     doFetch = () => {
-         axios.get("http://localhost:8081/api/orders")
+         axios.get("http://localhost:8081/api/orders", {
+          headers:{
+              userToken: localStorage.getItem("userToken"),
+          }
+      })
         .then((response) => {
             this.setState({
                 orders: response.data.slice(0,3),
@@ -109,21 +106,41 @@ export default class Home extends React.Component{
 
     render(){
         if(this.state.charged>2){
-        console.log(this.state.orderQuantityArray);
-            console.log(this.state.orderTotalArray);
-            console.log(this.state.actualMonthsArray);
-        var ordersElement = [];
-        for(var i = 0; i < this.state.orders.length; i++){
-            ordersElement.push(
-                <div className="col-md-12 col-lg-12 col-sm-12 col-12">
-                    {"#"+this.state.orders[i].id + " " + this.state.orders[i].date + " €" + this.state.orders[i].total}
+
+          var moreOrder = ( <div class="document">
+          <div class="document__title">Prodotto piu' Ordinato</div>
+          
+          <div class="document__title"><b>{this.state.moreOrder}</b></div>
+        </div>);
+          var moreSell = ( <div class="document">
+          <div class="document__title">Prodotto piu' Venduto</div>
+          
+          <div class="document__title"><b>{this.state.moreSell}</b></div>
+        </div>);
+
+            var ordersElement = [];
+            for(var i = 0; i < this.state.orders.length; i++){
+                ordersElement.push(
+                  <div class="card__main">
+                  <div class="card__row">
+                    <div class="card__icon"><i class="bi bi-calendar"></i></div>
+                    <div class="card__time">
+                      <div>{this.state.orders[i].date}</div>
+                    </div>
+                    <div class="card__detail">
+                      <div class="card__source text-bold">{this.state.orders[i].product.name}</div>
+                      <div class="card__description">Quantita': {this.state.orders[i].quantity}<br></br>Costo Totale: {this.state.orders[i].total} </div>
+                      <div class="card__note">{this.state.orders[i].supplier.name}</div>
+                    </div>
+                  </div>
                 </div>
-            );
-        }
-        var barChart1 = (<></>);
-        if(this.state.charged >2){
-        barChart1 = (
-            <BarChart 
+                );
+            }
+            var barChart1 = (<></>);
+            var barChart2 = (<></>);
+            if(this.state.charged >2){
+            barChart1 = (
+                <BarChart 
                     months={this.state.actualMonthsArray}
                     firstName="Quantita'"
                     secondName="Totale" 
@@ -131,46 +148,165 @@ export default class Home extends React.Component{
                     firstValues={this.state.orderQuantityArray} 
                     secondValues={this.state.orderTotalArray}/>
         );
-        }
-        return(
-          <div className="Home">
-            
-            <div>Benvenuto nella Home!</div>
-            <div className="row">
-                <div className="col-md-6 col-lg-6 col-sm-12 col-12">
-                {barChart1}
-                </div>
-                <div className="col-md-6 col-lg-6 col-sm-12 col-12">
-                    <BarChart 
-                        months={this.state.actualMonthsArray}
-                        firstName="Quantita'"
-                        secondName="Totale"
-                        title="Vendite" 
-                        firstValues={this.state.sellQuantityArray} 
-                        secondValues={this.state.sellTotalArray}></BarChart>
-                </div>
-            </div>
-            <div className="row list">
-                <div className="col-md-6 col-lg-6 col-sm-12 col-12">
-                    <div className="col-md-12 col-lg-12 col-sm-12 col-12">
-                        Prodotto piu' ordinato l'ultimo mese: {this.state.moreOrder};
-                    </div>
-                    <div className="col-md-12 col-lg-12 col-sm-12 col-12">
-                        Prodotto piu' venduto l'ultimo mese: {this.state.moreSell};
-                    </div>
-                </div>
-                <div className="col-md-6 col-lg-6 col-sm-12 col-12">
-                <div className="col-md-12 col-lg-12 col-sm-12 col-12">
-                        Ordini in arrivo
-                    </div>
-                    {ordersElement}
-                    <div className="col-md-12 col-lg-12 col-sm-12 col-12">
-                    <div><Link to="/orders">Vedi tutti</Link></div>
-                    </div>
-                </div>
-            </div>
-          </div>
+        barChart2 = (
+            <BarChart 
+                    months={this.state.actualMonthsArray}
+                    firstName="Quantita'"
+                    secondName="Totale" 
+                    title="Vendite" 
+                    firstValues={this.state.sellQuantityArray} 
+                    secondValues={this.state.sellTotalArray}/>
             );
+        var orderToArrive = (<></>);
+        if(this.state.orders.length!=0){
+            orderToArrive = (
+              <div class="card">
+                <div class="card__header">
+                  <div class="card__header-title text-light">Ordini in arrivo (<a href="/orders">Vedi tutti</a>)
+                  </div>
+          
+                </div>
+               {ordersElement}
+              </div>
+            );
+        }
+        }
+
+return(
+  <main class="main">
+    <div class="main-overview">
+      <div class="overviewCard">
+        <div class="overviewCard-icon overviewCard-icon">
+          <CircleMenu
+            add="/AddCategory"
+            show="/products"
+            delete="/products"
+            modify="/products"
+          />
+        </div>
+        <div class="overviewCard-description">
+          <h3 class="overviewCard-title t">Gestione <strong>Categorie</strong></h3>
+          <p class="overviewCard-subtitle">sottotitolo</p>
+        </div>
+      </div>
+      <div class="overviewCard">
+        <div class="overviewCard-icon overviewCard-icon">
+        <CircleMenu
+            add="/products"
+            show="/orders"
+            delete="/orders"
+            modify="/orders"
+          />
+        </div>
+        <div class="overviewCard-description">
+          <h3 class="overviewCard-title ">Gestione <strong>Ordini</strong></h3>
+          <p class="overviewCard-subtitle">sottotitolo</p>
+        </div>
+      </div>
+      <div class="overviewCard">
+        <div class="overviewCard-icon overviewCard-icon">
+          <CircleMenu
+            add="/AddProduct"
+            show="/products"
+            delete="/products"
+            modify="/products"
+          />
+        </div>
+        <div class="overviewCard-description">
+          <h3 class="overviewCard-title ">Gestione <strong>Prodotti</strong></h3>
+          <p class="overviewCard-subtitle">sottotitolo</p>
+        </div>
+      </div>
+      <div class="overviewCard">
+        <div class="overviewCard-icon overviewCard-icon">
+        <CircleMenu
+            add="/position"
+            show="/position"
+            delete="/position"
+            modify="/position"
+          />
+        </div>
+        <div class="overviewCard-description">
+          <h3 class="overviewCard-title ">Gestione <strong>Posizioni</strong></h3>
+          <p class="overviewCard-subtitle">sottotitolo</p>
+        </div>
+      </div>
+      <div class="overviewCard">
+        <div class="overviewCard-icon overviewCard-icon">
+        <CircleMenu
+            add="/addSupplier"
+            show="/suppliers"
+            delete="/suppliers"
+            modify="/suppliers"
+          />
+        </div>
+        <div class="overviewCard-description">
+          <h3 class="overviewCard-title ">Gestione <strong>Fornitori</strong></h3>
+          <p class="overviewCard-subtitle">sottotitolo</p>
+        </div>
+      </div>
+      <div class="overviewCard">
+        <div class="overviewCard-icon overviewCard-icon">
+        <CircleMenu
+            add="/AddAccount"
+            show="/userControl"
+            delete="/userControl"
+            modify="/userControl"
+          />
+        </div>
+        <div class="overviewCard-description">
+          <h3 class="overviewCard-title ">Gestione <strong>Utenti</strong></h3>
+          <p class="overviewCard-subtitle">sottotitolo</p>
+        </div>
+      </div>
+    </div> 
+    
+    <div class="main__cards">
+      {orderToArrive}
+
+    
+      <div class="card card--finance">
+        <div class="card__header">
+          <div class="card__header-title "><strong>Ordini</strong> Mensili
+          </div>
+          
+        </div>
+        <div id="chartdiv">
+         {barChart1}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__header">
+          <div class="card__header-title ">Statistiche
+          </div>
+          
+        </div>
+        <div class="card">
+          <div class="documents">
+            {moreSell}
+           {moreOrder}
+            
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card card--finance">
+        <div class="card__header">
+          <div class="card__header-title "><strong>Vendite</strong> Mensili
+          </div>
+         
+        </div>
+        <div id="chartdiv">
+          {barChart2}
+        </div>
+      </div>
+    </div> 
+  </main>
+
+);
+
         }else{
             return(<Loading></Loading>)
         }

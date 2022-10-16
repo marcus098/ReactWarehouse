@@ -8,6 +8,7 @@ import Overlay from "../components/Overlay";
 import AddProduct from "./AddProduct";
 import '../css/SearchBar.scss';
 import Loading from "../components/Loading";
+import Category from "../components/Category";
 
 export default class ProductsPage extends React.Component{
     constructor(props){
@@ -32,7 +33,7 @@ export default class ProductsPage extends React.Component{
         };
         this.handler = this.handler.bind(this);
     }
-
+    
     checkSupplier = () => {
         var urlParams = window.location.search;
         var arr = urlParams.split("=");
@@ -50,27 +51,21 @@ export default class ProductsPage extends React.Component{
     }
     
     searchCategories = async () => {
-       /* var str = "";
-        if(idSupplier == 0){
-            str = "http://localhost:8081/api/categories";
-        }else{
-            str = "http://localhost:8081/api/categoriesSupplier/"+idSupplier;
-        }*/
         await axios.get("http://localhost:8081/api/categories/"+this.state.idSupplier)
         .then((response) => {
             this.setState({categories: response.data});
             this.setState({totalPages: Math.ceil(response.data.length/20)});
             if(response.data.length!=0)
-                this.setState({loading: false});
+            this.setState({loading: false});
         })
         .catch(console.log("errore"));
     }
-
+    
     deleteCategory = (id) =>{
         axios.get("http://localhost:8081/api/categories/delete/"+id)
         .then((response) => {
             if(response.data)
-                window.location.replace(`http://localhost:3000/products`);
+            window.location.replace(`http://localhost:3000/products`);
         })
         .catch(console.log("errore"));
     }
@@ -87,6 +82,7 @@ export default class ProductsPage extends React.Component{
             }
             axios.get(url)
             .then((response) => {
+                
                 if(response.data.length!=0){
                     this.loadProducts(response.data);
                 }else{
@@ -103,10 +99,12 @@ export default class ProductsPage extends React.Component{
         this.setState({
             overlay: true,
             product: data
-            });
+        });
     }
     
     closeOverlay = () =>{
+        console.log(this.props);
+        this.props.showRowContent();
         this.setState({
             overlay: false,
             product: []
@@ -138,14 +136,20 @@ export default class ProductsPage extends React.Component{
         .catch(console.log("errore"));
     }
     
+    addProductByCategory = (id) => {
+        this.setState({addProduct:true, c: id})
+    }
+    
     render(){
+        console.log(this.props);
         //dichiaro gli elementi da visualizzare
         var arrElements = [];
         var arrowElement;
         var addProductButton;
         var overlayElements = (<></>);
         if(this.state.overlay && this.state.product.length!=0){
-            overlayElements = (
+            this.props.hideRowContent();
+            overlayElements = ( 
                 <Overlay
                     type="product"
                     handler={this.closeOverlay}
@@ -155,167 +159,157 @@ export default class ProductsPage extends React.Component{
                     modifyQuantity={this.props.modifyQuantity}
                     addToCart={this.props.addToCart}
                 />
-            );
-        }
+                );
+            }
             
-        var filterElemts = (
-            <div className="row filter">
-                <div>
+            var filterElemts = (
+                <div className="row filter">
+                    <div>
                     Min. <input type="number" min="0" onInput={(e) => {
-                       if(e.target.value==""){
-                            this.setState({min: 0}, () => { 
-                            this.searchProducts(this.state.textSearch);
-                            });
-                        }else{
-                            this.setState({min: e.target.value}, () => { 
-                            this.searchProducts(this.state.textSearch);
-                            });
-                        }
-                        }} value={this.state.min}></input>
-                </div>
-                <div>
-                    Max. <input type="number" onChange={(e) => {
-                        (e.target.value=="") ? this.setState({max: -1}) : this.setState({max: e.target.value});
                         if(e.target.value==""){
-                            this.setState({max: -1}, () => { 
+                            this.setState({min: 0}, () => { 
                                 this.searchProducts(this.state.textSearch);
                             });
                         }else{
+                            this.setState({min: e.target.value}, () => { 
+                                this.searchProducts(this.state.textSearch);
+                            });
+                        }
+                        }} value={this.state.min}></input>
+                    </div>
+                <div>
+                Max. <input type="number" onChange={(e) => {
+                    (e.target.value=="") ? this.setState({max: -1}) : this.setState({max: e.target.value});
+                    if(e.target.value==""){
+                        this.setState({max: -1}, () => { 
+                            this.searchProducts(this.state.textSearch);
+                        });
+                    }else{
                         this.setState({max: e.target.value}, () => { 
                             this.searchProducts(this.state.textSearch);
                         });
                     }
-                        }}></input>
+                }}></input>
                 </div>
-            </div>
-        );
-        var header = []
-        header.push(
-            <section>
-<form class="search-container" action="https://llamaswill.tumblr.com/search">
-  <input id="search-box" type="text" class="search-box" name="q" onInput={(e) => this.searchProducts(e.target.value)} /><i class="bi bi-search iconSearch"></i>
-  <label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>
-  <input type="submit" id="search-submit" />
-</form>
-
-                <div className="row">
-                    <div className="col-lg-4 col-md-4 col-sm-6 col-6">{addProductButton}</div>
                 </div>
-                <div className="row">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-12 searchText">
-                        {//<input type="text" onInput={(e) => this.searchProducts(e.target.value)} value={this.state.textSearch} autoFocus></input>
-    }
-                        <span onClick={(e) => {
-                            e.preventDefault(); 
-                            if(this.state.filter){
-                                this.setState({filter: false}, () => { 
-                                    this.searchProducts(this.state.textSearch);
-                                });
-                            }else{
-                                this.setState({filter: true}, () => { 
-                                this.searchProducts(this.state.textSearch);
-                                });
-                            }}}>Filtra</span>
-                    </div>
-                </div>
-            </section>
-            );
-            if(this.state.filter)
-                header.push(filterElemts);
-            //mostro solo le categorie
-            if(this.state.showCategories){
-                this.state.categories.map((cat) => {
-                    arrElements.push(
-                        <div key={"category"+cat.id} className="col-lg-3 col-md-3 col-sm-4 col-4 clickable">
-                            
-                            <div class="card bg-light mb-3">
-  
-  <div class="card-body">
-    <h5 class="card-title" onClick={() => this.loadProductsCategory(cat.id)}>{cat.name}</h5>
-    <p class="card-text">{cat.description}</p>
-  </div>
-  <div class="card-header">
-    <Button onClick={(e) => {/*window.location.replace(`http://localhost:3000/AddProduct/`+cat.id)*/this.setState({addProduct:true, c: cat.id})}}>Aggiungi Prodotto</Button>
-    <Button onClick={() => {this.deleteCategory(cat.id)}}>Elimina</Button></div>
-</div>
+                );
+                var header = []
+                header.push(
+                    <section>
+                        <form class="search-container" action="https://llamaswill.tumblr.com/search">
+                            <input id="search-box" type="text" class="search-box" name="q" onInput={(e) => this.searchProducts(e.target.value)} /><i class="bi bi-search iconSearch"></i>
+                            <label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>
+                            <input type="submit" id="search-submit" />
+                        </form>
+                        <div className="row">
+                            <div className="col-lg-4 col-md-4 col-sm-6 col-6">{/*addProductButton*/}</div>
                         </div>
-                        );
-                    });
-                    if(this.state.addProduct){
-                        return(<AddProduct idCategory={this.state.c}></AddProduct>);
-                    }
-                    return(
-                        
-                        <section>
-                            
-                            <div className="row">
-                                {header}
-                                {arrElements}
-                                {this.state.categories.map((cat) => {
+                        <div className="row">
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-12 searchText">
                     
-                        <div key={"category"+cat.id} className="col-lg-4 col-md-4 col-sm-4 col-4 clickable" onClick={() => this.loadProductsCategory(cat.id)}>
-                            {cat.name}
-                        </div>
-                                
-                    })}
+                                <span onClick={(e) => {
+                                    e.preventDefault(); 
+                                    if(this.state.filter){
+                                        this.setState({filter: false}, () => { 
+                                            this.searchProducts(this.state.textSearch);
+                                        });
+                                    }else{
+                                        this.setState({filter: true}, () => { 
+                                        this.searchProducts(this.state.textSearch);
+                                    });
+                                }}}>Filtra
+                                </span>
                             </div>
-                        </section>
-                        );
-                    } else {
-                        arrowElement = (
-                            <Button onClick={() => {this.setState({showCategories: true}); this.componentDidMount()}}>Indietro</Button>
-                        );
-                        addProductButton = (
-                            <Button onClick={() => window.location.replace(`http://localhost:3000/AddProduct`)}>Aggiungi Prodotto</Button>
-                        );
+                        </div>
+                    </section>
+                    );
+                    if(this.state.filter)
+                        header.push(filterElemts);
                         
-                        //mostro i prodotti che sono presenti in data[]
-                        if(this.state.data.length != 0){
-                            for(var i = ((this.state.currantPage - 1) * 20); i < (this.state.currantPage * 20); i++){
-                                if(i < this.state.data.length){
-                                    arrElements.push(
-                                        <Product
-                                            key={"product"+this.state.data[i].id}
-                                            id={this.state.data[i].id}
-                                            name={this.state.data[i].name}
-                                            quantity = {this.state.data[i].quantity}
-                                            position = {this.state.data[i].positionList}
-                                            priceSell = {this.state.data[i].priceSell}
-                                            category = {this.state.data[i].category.name}
-                                            description={this.state.data[i].description}
-                                            handler={this.infoProduct}
-                                        >
-                                        </Product>
-                                        );
-                                    }
+                        //mostro solo le categorie
+                        if(this.state.showCategories){
+                            this.state.categories.map((cat) => {
+                                arrElements.push(
+                                    <Category
+                                        id={cat.id}
+                                        name={cat.name}
+                                        description={cat.description}
+                                        number={cat.numberProducts}
+                                        addProduct={this.addProductByCategory}
+                                        delete={this.deleteCategory}
+                                        charge={this.loadProductsCategory}
+                                    ></Category>
+                                    );
+                                });
+                                if(this.state.addProduct){
+                                    return(<AddProduct idCategory={this.state.c}></AddProduct>);
                                 }
-                            }
-                            if(this.state.loading==false){
-                                return(
-                                    <div className="OrdersPage">
-                                        {arrowElement}
-                                        {/*addProductButton*/}
-                                        {header}
-                                        <div className="row">
-                                            <div className="col-lg-2 col-md-2 col-sm-2 col-2">ID</div>
-                                            <div className="col-lg-3 col-md-3 col-sm-3 col-3">Nome</div>
-                                            <div className="col-lg-2 col-md-2 col-sm-2 col-2">Quantita'</div>
-                                            <div className="col-lg-3 col-md-3 col-sm-3 col-3">Prezzo vendita</div>
-                                            <div className="col-lg-2 col-md-2 col-sm-2 col-2">Posizione</div>
-                                        </div>
-                                        {arrElements}
-                                        <div className="row arrowPages text-center">
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
-                                                <ArrowPages elements={this.state.data.length} currentPage={this.state.currantPage} handler={this.handler}></ArrowPages>
-                                            </div>
-                                        </div>
-                                        {overlayElements}
-                                    </div>
 
-                                );
-                            }else {
-                                return (<Loading></Loading>)
+                                return(   
+                                    
+                                    <section style={{padding: "20px"}}>
+                                        <div className="row">
+                                            {header}
+                                            {arrElements}
+                                        </div>
+                                    </section>
+                                    );
+                                } else {
+                                    arrowElement = (
+                                        <i class="bi bi-arrow-left-circle icon clickable" onClick={() => {this.setState({showCategories: true}); this.componentDidMount()}}></i>
+                                        /*<Button >Indietro</Button>*/
+                                    );
+                                    addProductButton = (
+                                        <Button onClick={() => window.location.replace(`http://localhost:3000/AddProduct`)}>Aggiungi Prodotto</Button>
+                                    );
+                                            
+                                    //mostro i prodotti che sono presenti in data[]
+                                    if(this.state.data.length != 0){
+                                        for(var i = ((this.state.currantPage - 1) * 20); i < (this.state.currantPage * 20); i++){
+                                            if(i < this.state.data.length){
+                                                arrElements.push(
+                                                    <Product
+                                                        key={"product"+this.state.data[i].id}
+                                                        id={this.state.data[i].id}
+                                                        name={this.state.data[i].name}
+                                                        quantity = {this.state.data[i].quantity}
+                                                        position = {this.state.data[i].positionList}
+                                                        priceSell = {this.state.data[i].priceSell}
+                                                        category = {this.state.data[i].category.name}
+                                                        description={this.state.data[i].description}
+                                                        discount = {this.state.data[i].discount}
+                                                        handler={this.infoProduct}
+                                                    >
+                                                    </Product>
+                                                );
+                                            }
+                                        }
+                                    }
+                                    if(this.state.loading == false){
+                                        return(
+                                            <div className="productsPage">
+                                                {arrowElement}
+                                                {header}
+                                                <div className="row headerProductsPage">
+                                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2">ID</div>
+                                                    <div className="col-lg-3 col-md-3 col-sm-3 col-3">Nome</div>
+                                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2">Quantita'</div>
+                                                    <div className="col-lg-3 col-md-3 col-sm-3 col-3">Prezzo vendita</div>
+                                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2">Posizione</div>
+                                                </div>
+                                                {arrElements}
+                                                <div className="row arrowPages text-center">
+                                                    <div className="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+                                                        <ArrowPages elements={this.state.data.length} currentPage={this.state.currantPage} handler={this.handler}></ArrowPages>
+                                                    </div>
+                                                </div>
+                                                {overlayElements}
+                                            </div>
+                                                        
+                                        );
+                                    }else {
+                                        return (<Loading></Loading>)
+                                    }
+                                } 
                             }
-                        } 
-                    }
-                }
+                        }

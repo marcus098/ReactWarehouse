@@ -7,7 +7,7 @@ class Login extends React.Component{
         super(props);
         this.state = {
             errorMsg: '', 
-            usrTokn: sessionStorage.getItem("userToken"),
+            usrTokn: localStorage.getItem("userToken")/* sessionStorage.getItem("userToken")*/,
             email: '',
             password: '',
             isLoading:true,
@@ -24,7 +24,7 @@ class Login extends React.Component{
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ value: sessionStorage.getItem("userToken") })
+            body: JSON.stringify({ value: localStorage.getItem("userToken")/* sessionStorage.getItem("userToken")*/ })
         };
         fetch('http://localhost:8081/api/check', requestOptions)
         .then(response => response.json())
@@ -43,6 +43,7 @@ class Login extends React.Component{
     
     handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(this.refs.email.value);
         try{
             const rawResponse = await fetch('http://localhost:8081/api/auth', {
             method: 'POST',
@@ -53,12 +54,14 @@ class Login extends React.Component{
             body: JSON.stringify({email: this.refs.email.value, password: this.refs.password.value})
         });
         const content = await rawResponse.json();
-        console.log(content);
+        //console.log(content);
         this.setState({errorMsg: content.message})
         if(content.accessToken != "0"){
             this.setState({usrTokn: content.accessToken});
-            sessionStorage.setItem("userToken", content.accessToken);
-            window.sessionStorage.removeItem("productsCart");
+            localStorage.setItem("userToken", content.accessToken);
+            //sessionStorage.setItem("userToken", content.accessToken);
+            //window.sessionStorage.removeItem("productsCart");
+            localStorage.removeItem("productsCart");
             window.location.replace(`http://localhost:3000/home`);
         }
     }catch(err){
@@ -92,7 +95,7 @@ render(){
             </div>
           </fieldset>
           <div className="forms_buttons">
-            <button type="button" className="forms_buttons-forgot loginButton">Password dimenticata?</button>
+            <button type="button" className="forms_buttons-forgot loginButton">{/*password dimenticata*/}</button>
             <input type="submit" value="Accedi" className="forms_buttons-action loginButton" />
           </div>
         </form>

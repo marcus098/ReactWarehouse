@@ -5,8 +5,8 @@ $bdrds: 3px
 
 $white: #fff
 $black: #000
-$gray: #ccc
-$salmon: #e8716d
+$gray: rgba(#222222, .85)
+$blue: #2196F3
 $smoky-black: rgba(#222222, .85)
 
 $ff: 'Montserrat', sans-serif
@@ -24,10 +24,6 @@ $ff-medium: 500
 *
   box-sizing: border-box
 
-/*body
-  font-family: $ff
-  font-size: $ff-body
-  line-height: 1em*/
   
 .loginButton
   background-color: transparent
@@ -91,18 +87,18 @@ $ff-medium: 500
 
 .user_unregistered-signup
   margin-top: 30px
-  border: 1px solid $gray
+  border: 1px solid #2196F3
   border-radius: $bdrds
   padding: 10px 30px
   text-transform: uppercase
-  color: #e8716d
+  color: white
   line-height: 1em
   letter-spacing: .2rem
   background: transparent
   transition: background-color .5s ease-in-out, color .2s ease-in-out
 
   &:hover
-    color: #e8716d
+    color: #2196F3
     background-color: $gray
 
 .user_options-forms
@@ -130,7 +126,7 @@ $ff-medium: 500
       font-weight: $ff-medium
       line-height: 1em
       text-transform: uppercase
-      color: $salmon
+      color: $blue
       letter-spacing: .1rem
 
     &_field
@@ -164,6 +160,7 @@ $ff-medium: 500
         font-family: $ff
         letter-spacing: .1rem
         color: $gray
+        display:none
         text-decoration: underline
 
         transition: color .2s ease-in-out
@@ -172,10 +169,13 @@ $ff-medium: 500
           color: darken($gray, 10%)
 
       &-action
-        background-color: $salmon
+        background-color: $blue
         border-radius: $bdrds
-        padding: 10px 35px
-
+        padding: 10px 35px 29px
+        position: absolute
+        width: 140px
+        top: 210px
+        left: calc(50% - 70px)
         font-size: 1rem
         font-family: $ff
         font-weight: $ff-light
@@ -186,7 +186,7 @@ $ff-medium: 500
         transition: background-color .2s ease-in-out
 
         &:hover
-          background-color: darken($salmon, 10%)
+          background-color: darken($blue, 10%)
 
   .user_forms-signup,
   .user_forms-login
@@ -204,7 +204,8 @@ $ff-medium: 500
     transform: translate3d(120px, 0, 0)
 
     .forms_buttons
-      justify-content: flex-end
+      justify-content: center
+      
 
   .user_forms-login
     transform: translate3d(0, 0, 0)

@@ -20,7 +20,7 @@ export default class Purchase extends React.Component{
                 <div className="col-lg-2 col-md-2 col-sm-2 col-2">{this.props.quantity}</div>
                 <div className="col-lg-2 col-md-2 col-sm-2 col-2">{this.props.date}</div>
                 <div className="col-lg-2 col-md-2 col-sm-2 col-2">{this.props.discount}</div>
-                <div className="col-lg-2 col-md-2 col-sm-2 col-2">€{this.props.total}</div>
+                <div className="col-lg-2 col-md-2 col-sm-2 col-2 purchase-last-column">€{this.props.total}</div>
             </div>
             );
         }

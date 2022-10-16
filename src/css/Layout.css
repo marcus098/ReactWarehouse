@@ -7,6 +7,34 @@
     margin-top:30px
 }
 
+.icon{
+	color:#1E90FF;
+	padding:10px;
+	padding-top:0px;
+	padding-bottom:2.5px;
+	font-size: 24px
+}
+.iconOverlay{
+	color: white;
+	padding:10px;
+	padding-top:0px;
+	padding-bottom:10px;
+	font-size: 24px
+}
+.iconOverlay:hover{
+	color:#1E90FF;
+	padding:10px;
+	padding-top:0px;
+	padding-bottom:10px;
+	font-size: 24px
+}
+.clickable{
+	cursor: pointer
+}
+.divIcons{
+	display: flex;
+	justify-content: center;
+}
 .ArrowPages div{
     display: flex;
     flex-direction: row;
@@ -17,8 +45,56 @@
 .purchase{
     cursor: pointer
 }
+
+.boxPage{
+	color:green;
+	background-color: transparent;
+	font-size:20px;
+	border:none
+}
 .currentBoxPage{
-    color:red
+	background-color: transparent;
+	font-size: 20px;
+	color: #1E90FF;
+	border:none;
+	border-bottom: 3px #1E90FF solid;
+	padding-bottom: 0px;
+}
+.currentBoxPage:hover{
+	font-size:20px;
+	background-color: transparent;
+	padding-bottom: 0px;
+}
+.boxPage:hover{
+	font-size:20px;
+	background-color: transparent;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #1E90FF;
+    --bs-btn-border-color: #1E90FF;
+    --bs-btn-hover-color: auto;
+    --bs-btn-hover-bg: yellow;
+    --bs-btn-hover-border-color: #0a58ca;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #1E90FF;
+    --bs-btn-active-bg: transparent;
+    --bs-btn-active-border-color: #1E90FF;
+    --bs-btn-active-shadow: ;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+}
+
+.btn:first-child:hover, :not(.btn-check)+.btn:hover {
+    
+     background-color: transparent; 
+    /* border-color: var(--bs-btn-hover-border-color); */
+}
+#sign-up-button:hover{
+	background-color: #006de9;
+	color: white
 }
 
 .overlay{
@@ -28,15 +104,25 @@
     color:white;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-    z-index: 100;
+    z-index: 2100;
     margin-left: -60px
 }
 
 .close{
     position: absolute;
-    right:15px;
+    right:35px;
+	top:8px;
     font-size:30px;
-    cursor: pointer
+    cursor: pointer;
+	color: white;
+}
+.close:hover{
+    position: absolute;
+    right:35px;
+	top:8px;
+    font-size:30px;
+    cursor: pointer;
+	color: #1E90FF;
 }
 
 .title{
@@ -65,11 +151,6 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
 @import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
 
-body {
-	background: #DDD;
-	font-size: 15px;
-}
-
 .iconSearch{
   margin-left: -27px;
   margin-top:10px;
@@ -80,6 +161,8 @@ body {
 .search-container{
   position:absolute;
   top:0;
+  left:70px;
+  z-index: 2000;
 }
 
 /*form styles*/
@@ -108,8 +191,6 @@ body {
 	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
 	padding: 20px 30px;
 	box-sizing: border-box;
-	/*width: 80%;
-	/*margin: 0 10%;*/
 	position: relative;
 }
 #msformOverlay fieldset {
@@ -117,7 +198,7 @@ body {
 	position: relative;
 	display: block;
 }
-/*Hide all except first fieldset*/
+/*Nascondo tutti tranne il primo*/
 #msform fieldset:not(:first-of-type), #msformProduct fieldset:not(:first-of-type) {
 	display: none;
 }
@@ -180,5 +261,157 @@ body {
 }
 
 .supplierSelected{
-    background:red
+    border:2px solid #1E90FF;
+	background-color: rgba(30, 144, 255, 0.2);
+}
+
+.cut{
+	text-decoration: line-through;
+}
+
+.searchPosition{
+	width:"150px";
+	background:"transparent";
+	color:"white"; 
+	padding:"10px"; 
+	margin:"0px"
+}
+
+/* SAVE BUTTON */
+
+.stocks{
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+}
+
+/* CIRCLE MENU*/
+
+        
+#yuvarlak {
+	border-radius: 100%;
+	width: 60px;
+	height: 60px;
+	margin: 13px -8px 83px auto;
+	position: relative;
+	color: black;
+	z-index: 10;
+}
+
+#icerik {
+	z-index: 3;
+	position: relative;
+	background: rgba(30, 144, 255, 0.6);
+	width: 125px;
+	height: 125px;
+	border-radius: 100%;
+	color: white;
+	top: -40px;
+	left: -40px;
+	overflow: hidden;
+	transition: all .3s;
+	transform: scale(0.5) rotate(270deg);
+
+}
+
+.carpi {
+	display: block;
+	width: 42px;
+	height: 42px;
+	position: relative;
+	z-index: 20;
+	background-color: #ffffff;
+	border-radius: 100%;
+	left: 2px;
+	top: 44px;
+	cursor: pointer;
+	transition: all .3s;
+}
+
+.carpi:before {
+	content: "";
+	position: absolute;
+	width: 2px;
+	height: 32px;
+	background: #5D5D5D;
+	top: 5px;
+	left: 20px;
+}
+
+.carpi:after {
+	content: "";
+	position: absolute;
+	width: 32px;
+	height: 2px;
+	background: #5D5D5D;
+	left: 5px;
+	top: 20px;
+}
+
+.a,
+.b,
+.c,
+.d {
+	position: absolute;
+	font-size: 25px;
+	opacity: 0;
+}
+
+.a {
+	top: 5px;
+	left: 50px;
+}
+
+.b {
+	top: 50px;
+	left: 5px;
+}
+
+.c {
+	bottom: 5px;
+	left: 50px;
+}
+
+.d {
+	top: 50px;
+	right: 5px;
+}
+
+a{
+	text-decoration: none;
+	color: white;
+}
+
+#yuvarlak:hover > #icerik {
+	transform: scale(1);
+  transform: rotate(0);
+}
+
+#yuvarlak:hover > #icerik span {
+	opacity: 1;
+}
+
+#yuvarlak:hover > .carpi {
+	transform: rotate(135deg);
+}
+
+#yuvarlak:hover > .carpi:before, #yuvarlak:hover > .carpi:after {
+	background: #4C8BCA;
+}
+
+
+#codery {
+	display: inline-block;
+	padding: 10px 15px;
+	text-align: center;
+	color: white;
+	border: 2px solid #fff;
+}
+
+#codery:hover {
+	border: 2px dotted #fff;
+}
+
+#icerik a:hover > span {
+	color: #0062c3;
 }

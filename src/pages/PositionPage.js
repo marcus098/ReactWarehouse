@@ -49,12 +49,12 @@ export default class PositionPage extends React.Component{
                 if(i<this.state.positionList.length){
                     arrElements.push(
                       <Position
-                        new={false}
-                        id={this.state.positionList[i].id}
-                        name={this.state.positionList[i].name}
-                        description={this.state.positionList[i].description}
-                        productId={(this.state.positionList[i].product) ? this.state.positionList[i].product.id : ""}
-                        productName={(this.state.positionList[i].product) ? this.state.positionList[i].product.name : ""}
+                          new={false}
+                          id={this.state.positionList[i].id}
+                          name={this.state.positionList[i].name}
+                          description={this.state.positionList[i].description}
+                          productId={(this.state.positionList[i].product) ? this.state.positionList[i].product.id : ""}
+                          productName={(this.state.positionList[i].product) ? this.state.positionList[i].product.name : ""}
                       />
                         );
                     }
@@ -64,7 +64,7 @@ export default class PositionPage extends React.Component{
     
         return (
             <section>
-              <ul class="surveys grid">
+              <ul class="surveys grid" style={{display:"flex", flexWrap: "wrap", justifyContent: "center"}}>
                 {arrElements}  
                 <Position
                         new={true}

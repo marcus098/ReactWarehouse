@@ -30,7 +30,8 @@ export class Cart extends React.Component{
     }
       }
       componentDidMount = () => {
-        var storedArray = JSON.parse(sessionStorage.getItem("productsCart"));
+        //var storedArray = JSON.parse(sessionStorage.getItem("productsCart"));
+        var storedArray = JSON.parse(localStorage.getItem("productsCart"));
         this.setState({products: storedArray});
         console.log(this.state.products);
         
@@ -60,7 +61,7 @@ export class Cart extends React.Component{
                 <nav>
                     <div class="containerCart">
                         <ul class="navbar-right">
-                            <li><a href="#" id="cart" onClick={() => this.toggle()}><i className="fa fa-shopping-cart"></i> Cart <span class="badge">{numberProducts}</span></a></li>
+                            <li><a id="cart" onClick={() => this.toggle()}><i className="fa fa-shopping-cart iconCart"></i> Carrello <span class="badge">{numberProducts}</span></a></li>
                         </ul> 
                     </div> 
                 </nav>

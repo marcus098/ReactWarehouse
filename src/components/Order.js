@@ -9,7 +9,7 @@ export default class Order extends React.Component{
         super(props);
         this.state = {
             clicked: false,
-            icon: 'I',
+            icon: (<i class="fa fa-list-ul"></i>),
             render: true
         };
     }
@@ -24,7 +24,8 @@ export default class Order extends React.Component{
 
     deleteOrder = () => {
         axios.post('http://localhost:8081/api/orders/delete', {
-            id:this.props.id
+            id:this.props.id,
+            userToken: localStorage.getItem("userToken"),
           })
           .then((response) => {
             if(response.data.bool){
@@ -67,7 +68,7 @@ export default class Order extends React.Component{
             var element;
             if(this.state.clicked){
                 element = (<ul className="mainMenu">
-                <li onClick={() => this.setState({overlay:true})}>Arrivato</li>
+                <li onClick={() => {this.setState({overlay:true}); this.props.hideRowContent()}}>Arrivato</li><br></br>
                 <li onClick={() => this.deleteOrder()}>Elimina</li>
                 </ul>);
             }
@@ -90,7 +91,7 @@ export default class Order extends React.Component{
                     );
                 }
             return (
-                <div className="row">
+                <div className="row order">
                     {overlayElement}
                         <div className="col-lg-1 col-md-1 col-sm-1 col-1">{this.props.id}</div>
                         <div className="col-lg-2 col-md-2 col-sm-2 col-2">{this.props.product.name}</div>
@@ -98,12 +99,13 @@ export default class Order extends React.Component{
                         <div className="col-lg-3 col-md-3 col-sm-3 col-3">{this.props.date}</div>
                         <div className="col-lg-1 col-md-1 col-sm-1 col-1">{this.props.quantity}</div>
                         <div className="col-lg-2 col-md-2 col-sm-2 col-2">€{this.props.total}</div>
-                        <div className="col-lg-1 col-md-1 col-sm-1 col-1">
+                        <div className="col-lg-1 col-md-1 col-sm-1 col-1 order-last-column">
+                        
                         <span onClick={() => {
                     if(this.state.clicked)
-                        this.setState({clicked:false, icon: 'I'});
+                        this.setState({clicked:false, icon: (<i class="fa fa-list-ul"></i>)});
                     else{
-                        this.setState({clicked:true, icon: 'X'});
+                        this.setState({clicked:true, icon: (<i class="fa fa-close"></i>)});
                     }
                 }}>{this.state.icon}</span>{element}
                     </div>

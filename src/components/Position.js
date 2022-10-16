@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import '../css/Layout.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from "react-bootstrap";
+import ButtonSave from "./Elements/ButtonSave";
 
 export default class Position extends React.Component{
     constructor(props){
@@ -75,6 +76,10 @@ export default class Position extends React.Component{
           //show error message nome non inserito
         }
       }
+
+    addClick = (e) => {
+        this.setState({addClick: true})
+    }
     
     render(){
       if(this.props.new){
@@ -83,7 +88,7 @@ export default class Position extends React.Component{
               <li class="survey-item">
                 <span class="survey-name">
                   <h3>
-                    <input type="text" classname="" placeholder="Nome" ref="name"></input>
+                    <input type="text" classname="" placeholder="Nome" ref="name" style={{fontSize: "20px", width:"100%"}}></input>
                   </h3>
                 </span>
                 <div class="pull-right">
@@ -91,15 +96,15 @@ export default class Position extends React.Component{
                   </span>
                 </div>
                 <div>
-                  <textarea ref="description" placeholder="Descrizione"></textarea>
+                  <textarea ref="description" placeholder="Descrizione" style={{height:"80px"}}></textarea>
                 </div>
                 <Button onClick={(e) => this.savePosition()}>Salva</Button>
             </li>
             );
           }else{
             return(
-              <li class="survey-item">
-                <Button onClick={(e) => this.setState({addClick: true})}>Aggiungi</Button>
+              <li class="survey-item" style={{display:"flex", width:"center", justifyContent:"center"}}>
+                <ButtonSave handler={this.addClick} name="Aggiungi"></ButtonSave>
             </li>
             );
           }

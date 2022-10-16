@@ -6,21 +6,21 @@ import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 export default class ControlPanel extends React.Component{
-    constructor(props){
-        super(props);
-        this.props={
+  constructor(props){
+    super(props);
+    this.props={
 
-        }
     }
+  }
 
-    render(){
-        var categoryManagement;
-        var supplierManagement;
-        var productManagement;
-        var userManagement;
+  render(){
+    var categoryManagement;
+    var supplierManagement;
+    var productManagement;
+    var userManagement;
 
-        userManagement=(
-            <div class="col s6">
+    userManagement=(
+      <div class="col s6">
         <div align="center" class="card">
           <div class="row">
             <div class="left card-title">
@@ -47,10 +47,9 @@ export default class ControlPanel extends React.Component{
           </div>
         </div>
       </div>
-        );
-
-        productManagement = (
-            <div class="col s6">
+      );
+    productManagement = (
+      <div class="col s6">
         <div  align="center" class="card">
           <div class="row">
             <div class="left card-title">

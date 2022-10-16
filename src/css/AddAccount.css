@@ -77,13 +77,16 @@ html {
 #msformOverlay input, #msformOverlay textarea {
 	padding: 15px;
 	border: 1px solid #ccc;
-	border-radius: 3px;
+	border-radius: 10px;
 	margin-bottom: 10px;
-	width: 100%;
+	width: 20%;
 	box-sizing: border-box;
 	font-family: montserrat;
-	color: #2C3E50;
+	color: black;
 	font-size: 13px;
+}
+#msformOverlay input::placeholder, #msformOverlay textarea::placeholder {
+	color: black;
 }
 /*buttons*/
 #msform .action-button, #msformProduct .action-button {
@@ -103,11 +106,11 @@ html {
 
 #msformOverlay .action-button {
 	width: 100px;
-	background: blue;
+	background: #1E90FF;
 	font-weight: bold;
 	color: white;
 	border: 0 none;
-	border-radius: 1px;
+	border-radius: 6px;
 	cursor: pointer;
 	padding: 10px 5px;
 	margin: 10px 5px;
@@ -127,6 +130,9 @@ html {
 	font-size: 13px;
 	color: #666;
 	margin-bottom: 20px;
+}
+.btn--regular:hover{
+background-color: red;
 }
 /*progressbar*/
 #progressbar {

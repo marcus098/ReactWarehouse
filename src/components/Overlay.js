@@ -53,7 +53,8 @@ render(){
         }
         return(
             <div className="overlay">
-                <div className="close" onClick={() => this.props.handler()}>X</div>
+                <i class="bi bi-x-lg close" onClick={() => this.props.handler()}></i>
+                
                 {typeReturn}
             </div>
             );

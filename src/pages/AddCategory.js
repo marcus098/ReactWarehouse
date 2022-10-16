@@ -18,6 +18,7 @@ export default class AddOrder extends React.Component{
 
     saveCategory = () => {
         axios.post('http://localhost:8081/api/categories/add', {
+            userToken: localStorage.getItem("userToken"),
             name: this.state.name,
             description: this.state.description
           })

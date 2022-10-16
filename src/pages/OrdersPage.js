@@ -30,7 +30,11 @@ export default class OrdersPage extends React.Component{
     }
     
     doFetch = async () => {
-        await axios.get("http://localhost:8081/api/orders")
+        await axios.get("http://localhost:8081/api/orders", {
+            headers:{
+                userToken: localStorage.getItem("userToken"),
+            }
+        })
         .then((response) => {
             this.setState({
                 data: response.data, 
@@ -57,19 +61,20 @@ export default class OrdersPage extends React.Component{
                 if(i<this.state.data.length){
                     arrElements.push(
                         <Order
-                        handler={this.infoOrder}
-                        key={this.state.data[i].id + i*10}
-                        id={this.state.data[i].id}
-                        name={this.state.data[i].supplier.name}
-                        date = {this.state.data[i].date}
-                        quantity = {this.state.data[i].quantity}
-                        total = {this.state.data[i].total}
-                        description={this.state.data[i].description}
-                        product={this.state.data[i].product}
-                        
+                            handler={this.infoOrder}
+                            key={this.state.data[i].id + i*10}
+                            id={this.state.data[i].id}
+                            name={this.state.data[i].supplier.name}
+                            date = {this.state.data[i].date}
+                            quantity = {this.state.data[i].quantity}
+                            total = {this.state.data[i].total}
+                            description={this.state.data[i].description}
+                            product={this.state.data[i].product}
+                            hideRowContent = {this.props.hideRowContent()}
                         >
                         </Order>
                         );
+                        
                     }
                 }
             }
@@ -77,13 +82,13 @@ export default class OrdersPage extends React.Component{
                 return(
                     <div className="OrdersPage">
                          
-                        <div className="row">
-                            <div className="pageTitle">Lista Ordini</div>
+                        <div className="row pageTitle">
+                            Lista Ordini
                         </div>
                         <div className="row">
                            {/* <div className="col-lg-4 col-md-4 col-sm-8 col-8 add"><Button>Aggiungi Ordine</Button></div>*/}
                         </div>
-                        <div className="row">
+                        <div className="row headerOrdersPage">
                             <div className="col-lg-1 col-md-1 col-sm-1 col-1">ID</div>
                             <div className="col-lg-2 col-md-2 col-sm-2 col-2">Prodotto</div>
                             <div className="col-lg-2 col-md-2 col-sm-2 col-2">Fornitore</div>
