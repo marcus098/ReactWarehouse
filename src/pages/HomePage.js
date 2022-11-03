@@ -182,6 +182,11 @@ return(
             show="/products"
             delete="/products"
             modify="/products"
+            icon="bi bi-layout-text-window"
+            fontSize="30px"
+            position="absolute"
+            top="6px"
+            left="6px"
           />
         </div>
         <div class="overviewCard-description">
@@ -196,6 +201,11 @@ return(
             show="/orders"
             delete="/orders"
             modify="/orders"
+            icon="bi bi-box-seam"
+            fontSize="36px"
+            position="absolute"
+            top="3px"
+            left="3px"
           />
         </div>
         <div class="overviewCard-description">
@@ -206,10 +216,15 @@ return(
       <div class="overviewCard">
         <div class="overviewCard-icon overviewCard-icon">
           <CircleMenu
-            add="/AddProduct"
-            show="/products"
-            delete="/products"
-            modify="/products"
+              add="/products"
+              show="/products"
+              delete="/products"
+              modify="/products"
+              icon="bi bi-box-seam"
+              fontSize="36px"
+              position="absolute"
+              top="3px"
+              left="3px"
           />
         </div>
         <div class="overviewCard-description">
@@ -224,6 +239,11 @@ return(
             show="/position"
             delete="/position"
             modify="/position"
+            icon="bi bi-ui-radios-grid"
+            fontSize="32px"
+            position="absolute"
+            top="5px"
+            left="5px"
           />
         </div>
         <div class="overviewCard-description">
@@ -238,6 +258,8 @@ return(
             show="/suppliers"
             delete="/suppliers"
             modify="/suppliers"
+            icon="bi bi-person"
+            fontSize="38px"
           />
         </div>
         <div class="overviewCard-description">
@@ -252,6 +274,8 @@ return(
             show="/userControl"
             delete="/userControl"
             modify="/userControl"
+            icon="bi bi-person"
+            fontSize="38px"
           />
         </div>
         <div class="overviewCard-description">

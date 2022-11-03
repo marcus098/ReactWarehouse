@@ -27,7 +27,6 @@ export default class ProductOverlay extends React.Component{
             userToken: localStorage.getItem("userToken"),
         })
         .then((response) => {
-            console.log(response.data);
             if(response.data){
                 this.setState({suppliers: response.data});
             }
@@ -56,7 +55,6 @@ export default class ProductOverlay extends React.Component{
 
     saveSupplier = () => {
         if(this.refs.quantity.value != "" && this.state.idSupplier != 0){
-            console.log(this.state.idSupplier);
             if(this.refs.quantity.value > 0){
                 axios.post('http://localhost:8081/api/orders/add', {
                     userToken: localStorage.getItem("userToken"),
@@ -66,7 +64,6 @@ export default class ProductOverlay extends React.Component{
                     idProduct: this.props.props.product.id
                 })
                 .then((response) => {
-                    console.log(response);
                     if(response.data.bool){
                         this.props.props.handler();
                     }
@@ -96,9 +93,13 @@ export default class ProductOverlay extends React.Component{
             total = price - ((price * discount) / 100);
         }
         total *= quantity;
-        console.log(total);
         this.setState({total: total});
         return total;
+    }
+
+    delete = () => {
+        this.props.props.delete(this.props.props.product.id);
+        this.props.props.handler();
     }
 
     render(){
@@ -119,7 +120,7 @@ export default class ProductOverlay extends React.Component{
         if(this.props.props.product.discount != 0){
             spanClass = "cut";
             finalPrice = this.props.props.product.priceSell - ((this.props.props.product.priceSell * this.props.props.product.discount) / 100);
-            discountPriceElement = "€" + finalPrice;
+            discountPriceElement = "€" + finalPrice.toFixed(2);
             discountPercentageElement = " -" + this.props.props.product.discount + "%";
         }
         return (
@@ -128,8 +129,8 @@ export default class ProductOverlay extends React.Component{
                     <fieldset>
                         
                         <i class="bi bi-arrow-left-circle iconOverlay clickable next" style={{position:"absolute", top:"-41px", left: "-120px", fontSize: "26px"}}></i>
-                        Quantita': <input placeholder="Quantita'" min="1" max={this.props.props.quantity} onChange={this.totalFunction} ref="quantitySell" defaultValue="1"></input><br></br>
-                        Sconto: (%) <input placeholder="Sconto in %" onChange={this.totalFunction} defaultValue={this.props.props.product.discount} ref="discountSell"></input><br></br>
+                        Quantita': <input placeholder="Quantita'" min="1" style={{color:"black"}} max={this.props.props.quantity} onChange={this.totalFunction} ref="quantitySell" defaultValue="1"></input><br></br>
+                        Sconto: (%) <input placeholder="Sconto in %" style={{color:"black"}} onChange={this.totalFunction} defaultValue={this.props.props.product.discount} ref="discountSell"></input><br></br>
                         <br></br>
                         <span style={{height: "100px"}}>Totale: €{this.state.total}</span> 
                         <br></br>
@@ -140,8 +141,8 @@ export default class ProductOverlay extends React.Component{
                         <div className="row title">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                             <h1>
-                                <span><i class="bi bi-pen"></i></span> 
-                                {this.props.props.product.name} 
+                                {/*<span><i class="bi bi-pen"></i></span> */}
+                                {this.props.props.product.name} <i class="bi bi-trash delete" onClick={this.delete} style={{fontSize: "24px"}}></i>
                             </h1>
                           </div>
                         </div>

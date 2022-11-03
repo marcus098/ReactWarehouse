@@ -173,6 +173,7 @@ render(){
                 );
             }
             fieldSetDiscount=(
+                <div className="divFieldsetDiscount">
                 <fieldset>
                     <legend>Gestione Sconti</legend>
                     {discounts}
@@ -185,6 +186,7 @@ render(){
                     </select>
                     <Button className="fa fa-plus-circle buttonAutomation" onClick={this.saveDiscount}></Button>
                 </fieldset>
+                </div>
             );
         }
         var stocks = [];
@@ -208,15 +210,19 @@ render(){
                     <section className="stocks">
                         <span>{str}</span>
                         <input type="number" ref={refObject} min="0" defaultValue={number} />
-                        <span className="save"><ButtonSave name="Salva" value={element.id} handler={this.save}></ButtonSave></span>
+                        <span className="save">
+                            <ButtonSave name="Salva" value={element.id} handler={this.save} />
+                        </span>
                     </section>
                 );
             }
             fieldSetStock=(
-                <fieldset>
-                    <legend>Gestione Ordini</legend>
-                    {stocks}
-                </fieldset>
+                <div className="divFieldsetStock">
+                    <fieldset>
+                        <legend>Gestione Ordini</legend>
+                        {stocks}
+                    </fieldset>
+                </div>
             );
         }
     }
@@ -233,12 +239,12 @@ render(){
                         {automationElements}
                     </div>
                     <div className="divFieldsets">
-                        <div className="divFieldsetDiscount">
+                        
                             {fieldSetDiscount}
-                        </div>
-                        <div className="divFieldsetStock">
+                        
+                       
                             {fieldSetStock}
-                        </div>
+                        
                     </div>
                 </div>
                 );

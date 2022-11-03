@@ -22,6 +22,7 @@ import PositionPage from './pages/PositionPage';
 import AddSupplier from './pages/AddSupplier';
 import Unauthorized from './pages/Unauthorized';
 import AutomationPage from './pages/AutomationPage';
+import React from 'react';
 
 function App() {
   return (

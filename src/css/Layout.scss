@@ -159,7 +159,7 @@ $width-sidenav: 0px;
   grid-template-areas:
     'main';
   height: 100vh;
-  overflow-x: hidden; // Prevent overflow scroll from hidden sidenav
+  /*overflow-x: hidden;*/
 
   &--noscroll {
     overflow-y: hidden;

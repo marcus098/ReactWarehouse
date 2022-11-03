@@ -231,14 +231,12 @@ $natural: #0073e6;
             margin-left: 0 !important;
     		margin-right: 0 !important;
         }
-
-
+        
         .user-profile{
             display:flex;
             flex-wrap: wrap;
             justify-content: space-around;
             padding:1rem .5rem 3rem .5rem;
-
             @include respond-to($measureWide){
                 flex-wrap: wrap;
                 justify-content: center;

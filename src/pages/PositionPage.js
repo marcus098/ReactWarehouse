@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import Position from "../components/Position";
 import Overlay from "../components/Overlay";
 import '../css/Position.scss';
+import Loading from "../components/Loading";
 
 
 export default class PositionPage extends React.Component{
@@ -27,7 +28,11 @@ export default class PositionPage extends React.Component{
 
     chargePositions = () => {
       this.setState({positionList: []});
-      axios.get("http://localhost:8081/api/positions")
+      axios.get("http://localhost:8081/api/positions", {
+        headers:{
+            userToken: localStorage.getItem("userToken"),
+        }
+    })
       .then((response) => {
           this.setState({
               positionList: response.data, 
@@ -40,12 +45,17 @@ export default class PositionPage extends React.Component{
     addToPositionList = (position) => {
       this.setState({positionList: this.state.positionList.push(position)});
     }
+    handler = (value) => {
+      this.setState({
+          currantPage: value
+      });
+  }
 
     render(){
-      console.log(this.state.positionList);
+      
       var arrElements = [];
         if(this.state.positionList.length != 0){
-            for(var i = ((this.state.currantPage - 1) * 20); i < (this.state.currantPage * 20); i++){
+            for(var i = ((this.state.currantPage - 1) * 19); i < (this.state.currantPage * 19); i++){
                 if(i<this.state.positionList.length){
                     arrElements.push(
                       <Position
@@ -61,17 +71,30 @@ export default class PositionPage extends React.Component{
                 }
             }
             
-    
+    if(this.state.loading==false){
         return (
             <section>
               <ul class="surveys grid" style={{display:"flex", flexWrap: "wrap", justifyContent: "center"}}>
-                {arrElements}  
-                <Position
+              <Position
                         new={true}
                         newPosition={this.chargePositions}
                       />
-              </ul>  
+                {arrElements}  
+                <br></br>
+                
+              </ul> 
+              <ul>
+
+              <div className="row arrowPages text-center" style={{marginTop:"180px"}}>
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+                                <ArrowPages elements={this.state.positionList.length} currentPage={this.state.currantPage} handler={this.handler}></ArrowPages>
+                            </div>
+                        </div>
+                        </ul> 
             </section>
         );
+    }else{
+      return(<Loading></Loading>)
+    }
     }
 }

@@ -43,7 +43,11 @@ export default class PurchasesPage extends React.Component{
     }
 
     doFetch = async () => {
-        await axios.get("http://localhost:8081/api/purchases")
+        await axios.get("http://localhost:8081/api/purchases", {
+            headers:{
+                userToken: localStorage.getItem("userToken"),
+            }
+        })
         .then((response) => {
             console.log(response.data);
             this.setState({data: response.data});
@@ -83,7 +87,7 @@ export default class PurchasesPage extends React.Component{
                             id={this.state.data[i].id}
                             quantity={this.state.data[i].quantity}
                             total={this.state.data[i].price}
-                            discount="0"
+                            discount={this.state.data[i].discount}
                             date={this.state.data[i].localDateTime}
                             description={this.state.data[i].description}
                             handler={this.infoPurchase}

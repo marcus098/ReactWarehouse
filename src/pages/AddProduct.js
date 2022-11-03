@@ -24,7 +24,8 @@ export default class AddProduct extends React.Component{
             supplierName:'',
             count:0,
             suplliersToSave:[],
-            backButton:true
+            backButton:true,
+            categoryId:0
         }
     }
 
@@ -50,15 +51,18 @@ export default class AddProduct extends React.Component{
         if(this.state.idSupplier!=0 && this.state.priceSupplier!=0 && this.state.idSupplier!="" && this.state.priceSupplier!=""){
             this.setState({
                 count: this.state.count+1,
-                suppliersToSave: this.state.suplliersToSave.push({idSupplier: this.state.idSupplier, priceSupplier: this.state.priceSupplier})
+                suppliersToSave: this.state.suplliersToSave.push({idSupplier: this.state.idSupplier, priceSupplier: this.state.priceSupplier}),
+
             });
         }
+        
         if(this.state.name != "" && this.state.quantity != "" && this.state.priceSell != ""){
             axios.post('http://localhost:8081/api/products/add', {
             userToken: localStorage.getItem("userToken"),
             name: this.state.name,
             priceSell: this.state.priceSell,
             quantity: this.state.quantity,
+            category: this.props.idCategory,
             description: this.state.description,
             count: this.state.count,
             suppliersToSave: this.state.suplliersToSave,
@@ -84,6 +88,8 @@ export default class AddProduct extends React.Component{
             this.refs.priceSupplier.value = '';
             this.refs.supplierName.value="";
             //this.refs.name.value = '';
+            window.location.reload();
+           // window.location.replace(`http://localhost:3000/products`);
           })
           .catch(function (error) {
             console.log(error);
@@ -136,7 +142,8 @@ export default class AddProduct extends React.Component{
         var backButton = (<></>);
         if(this.state.backButton){
         backButton = (
-          <input type="button" ref="back" onClick={(e) => console.log("Ciao")} value="Indietro" class="previous action-button"></input>
+          <i class="previous bi bi-arrow-left icon clickable" ref="back" style={{position:"absolute", top:"5px", left:"-5px"}}></i>
+         // <input type="button" ref="back" onClick={(e) => console.log("Ciao")} value="Indietro" style={{position:"absolute"}} class="previous action-button"></input>
         );
         }
         return(
@@ -144,7 +151,7 @@ export default class AddProduct extends React.Component{
                 {progressbar}
                 
                 <fieldset>
-                  <h2 class="fs-title">Inserisci nuovo prodotto</h2>                  
+                  <h2 class="fs-title" style={{fontSize: "24px"}}>Inserisci nuovo prodotto</h2>                  
                   <input type="text" ref="name" placeholder="Nome" onChange={(e) => this.setState({name: e.target.value})} required />
                   <input type="number" ref="quantity" placeholder="Quantita'" onChange={(e) => this.setState({quantity: e.target.value})} required />
                   <input type="text" ref="priceSell" placeholder="Prezzo Di Vendita" onChange={(e) => this.setState({priceSell: e.target.value})} required />
@@ -155,14 +162,14 @@ export default class AddProduct extends React.Component{
                 <fieldset>
                   <h2 class="fs-title">Seleziona fornitore</h2>                
                   <input type="text" ref="nameSupplier" onChange={(e) => this.searchSuppliersByName(e.target.value)} placeholder="Nome Fornitore" required />
-                  <select ref="supplierValues" onChange={(e) => this.setState({idSupplier: e.target.value})}>
+                  <select ref="supplierValues" onChange={(e) => this.setState({idSupplier: e.target.value})} style={{width:"100%", marginBottom:"10px", height:"40px", borderRadius:"10px"}}>
                     {optionSupplier}
                   </select>
                   <input type="number" ref="priceSupplier" onChange={(e) => this.setState({priceSupplier: e.target.value})} placeholder="Costo acquisto" required />
                  {backButton}
-                  <input type="button" class="action-button" onClick={(e) => this.addOtherSupplier()} value="Aggiungi altro fornitore" />
-                    <input type="button" class="action-button" onClick={(e) => this.addOtherProduct()} value="Salva e aggiungi un altro Prodotto" />
-                  <input type="button" class="action-button" onClick={(e) => {e.preventDefault(); this.saveProduct()}} value="Salva" />
+                  {/*<input type="button" class="action-button" style={{width:"170px"}} onClick={(e) => this.addOtherSupplier()} value="Aggiungi altro fornitore" />*/}
+                   {/* <input type="button" class="action-button" style={{width:"170px"}} onClick={(e) => this.addOtherProduct()} value="Salva e aggiungi un altro Prodotto" />*/}
+                  <input type="button" class="action-button" style={{width:"100px"}} onClick={(e) => {e.preventDefault(); this.saveProduct()}} value="Salva" />
                 </fieldset>
               </form>
 

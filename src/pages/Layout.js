@@ -11,33 +11,41 @@ class Layout extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      products: []
+      products: [],
+      count: 0,
+      id: 0,
+      cart: (<></>)
     }
   }
 
   componentDidMount = () => {
     var storedArray = JSON.parse(localStorage.getItem("productsCart"));
-    if(storedArray && storedArray.length != 0)
-      this.setState({products: storedArray});
+    console.log(storedArray);
+    if(storedArray && storedArray.length != 0){
+      this.setState({products: storedArray, id: this.state.id+1});
+    }
   }
 
   emptyCart = () => {
-    this.setState({products: []});
+    this.setState({products: [], id: this.state.id+1});
     localStorage.removeItem("productsCart");
+    this.setState({count: this.state.count+1});
   }
 
-  sell = () => {
+  sell = (desc) => {
+    this.setState({count: this.state.count+1});
     var storedArray = JSON.parse(localStorage.getItem("productsCart"));
     axios.post('http://localhost:8081/api/sell', {
       list: storedArray
-    },{
+    }, {
     headers: {
-      userToken: localStorage.getItem("userToken")
+      userToken: localStorage.getItem("userToken"),
+      description: desc
     }
   })
     .then((response) => {
       if(response.data){
-        this.setState({products: []});
+        this.setState({products: [], id: this.state.id+1});
         localStorage.removeItem("productsCart");
       }
     })
@@ -58,29 +66,35 @@ class Layout extends React.Component {
           break;
         }
       }
+      this.setState({count: this.state.count+1});
     }
   }
 
   addToCart = (idProduct, nameProduct, priceProduct, quantityProduct, discountProduct) => {
-    if(this.state.products && this.state.products.length!=0){
+    var value = false;
+    if(this.state.products && this.state.products.length != 0){
+      var arrTmp = [];
       for(var i = 0; i < this.state.products.length; i++){
+        arrTmp[i] = this.state.products[i];
         if(this.state.products[i].id == idProduct){
-          this.state.products[i].quantity += 1;
           localStorage.setItem("productsCart", JSON.stringify(this.state.products));
-          return;
+          value = true;
+          arrTmp[i].quantity = parseInt(arrTmp[i].quantity) + parseInt(quantityProduct);
         }
       }
     }
-    var arr = {id:idProduct,name:nameProduct,quantity:1, price: priceProduct, quantity:quantityProduct, discount: discountProduct};
-    this.setState({products: this.state.products.push(arr)});
+    if(value){
+      this.setState({product: arrTmp});
+      localStorage.setItem("productsCart", JSON.stringify(this.state.products));
+      return;
+    }
+    var arr = {id:idProduct,name:nameProduct, price: parseInt(priceProduct), quantity: parseInt(quantityProduct), discount: parseInt(discountProduct)};
+    this.setState({products: this.state.products.push(arr), id: this.state.id+1});
     localStorage.setItem("productsCart", JSON.stringify(this.state.products));
   }
 
   hideRowContent = () => {
-   
     this.refs.rowContent.style.zIndex = "101";
-    console.log(this.refs.rowContent);
-   
   }
 
   showRowContent = () => {
@@ -94,13 +108,28 @@ class Layout extends React.Component {
     var addToCart = this.addToCart;
     var showRowContent = this.showRowContent;
     var hideRowContent = this.hideRowContent;
-    var cart = ( <Cart products={this.state.products} 
-      modifyQuantity={this.modifyQuantity} 
-      sell={this.sell} 
-      emptyCart={this.emptyCart}></Cart>);
+    var cart = ( 
+      <Cart 
+          products={this.state.products} 
+          modifyQuantity={this.modifyQuantity} 
+          sell={this.sell} 
+          emptyCart={this.emptyCart}
+          addToCart={this.addToCart}
+        ></Cart>
+    );
+    console.log("Carico");
+    
       return (
         <section>
-          {cart}
+          {/*this.state.cart*/}
+          <Cart 
+            id={this.state.id}
+            products={this.state.products} 
+            modifyQuantity={this.modifyQuantity} 
+            sell={this.sell} 
+            emptyCart={this.emptyCart}
+            addToCart={this.addToCart}
+        ></Cart>
           <Navbar role={this.props.role} />
           <main>
             <div className="row spostamento">

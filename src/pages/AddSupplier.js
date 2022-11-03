@@ -57,10 +57,10 @@ export default class AddSupplier extends React.Component{
           <div class="sign-up__content">
             <header class="sign-up__header">
               <h1 class="sign-up__title">
-                Inserisci fornitore
+                Nuovo fornitore
               </h1>
               <p class="sign-up__descr">
-                Inserisci un nuovo fornitore
+                Inserisci i dati del fornitore che vuoi aggiungere
               </p>
             </header>
             <form class="sign-up__form form">

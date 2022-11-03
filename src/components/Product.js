@@ -24,8 +24,7 @@ export default class Product extends React.Component{
         if(this.props.discount != 0){
             spanClass = "cut";
             finalPrice = this.props.priceSell - ((this.props.priceSell * this.props.discount) / 100);
-            console.log(this.props.priceSell - ((this.props.priceSell * this.props.discount) / 100));
-            discountPriceElement = "€"+finalPrice;
+            discountPriceElement = " €"+finalPrice.toFixed(2);
             discountPercentageElement = " -" + this.props.discount + "%";
         }
         return (

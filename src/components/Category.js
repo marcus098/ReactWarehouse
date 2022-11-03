@@ -3,16 +3,13 @@ import React from "react";
 export default class Category extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            
-        }
     }
     
     render(){
         return(
             <div key={"category"+this.props.id} className="col-lg-3 col-md-3 col-sm-4 col-4">
-                <div class="card bg-light mb-3">
-                    <div class="card-body">
+                <div class="card bg-light mb-3" style={{minHeight:"0px"}}>
+                    <div class="card-body" style={{minHeight:"130px"}}>
                         <h5 class="card-title clickable" onClick={() => this.props.charge(this.props.id)}>{this.props.name}</h5>
                         <p class="card-text">{this.props.description}</p>
                     </div>

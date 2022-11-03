@@ -19,7 +19,6 @@ export default class OrderSupplierOverlay extends React.Component{
             
           })
           .then((response) => {
-            console.log(response);
             if(response.data){
               this.setState({suppliers: response.data});
             }

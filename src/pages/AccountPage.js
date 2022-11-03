@@ -80,7 +80,7 @@ export default class AccountPage extends React.Component{
             Account
           </h1>
           <p class="sign-up__descr">
-            descrizione pagina
+            {/*descrizione pagina*/}
           </p>
         </header>
         <form class="sign-up__form form">
@@ -151,13 +151,13 @@ export default class AccountPage extends React.Component{
     <div className="col-lg-6 col-md-6 col-6 col-sm-6 descriptionAccount">
       <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-            ciao
+            
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-            ciao
+            Modifica i tuoi dati personali, i tuoi contatti e la tua password.
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-            ciao
+            
           </div>
       </div>
     </div>

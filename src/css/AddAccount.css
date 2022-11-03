@@ -82,19 +82,20 @@ html {
 	width: 20%;
 	box-sizing: border-box;
 	font-family: montserrat;
-	color: black;
+	color: white;
 	font-size: 13px;
 }
 #msformOverlay input::placeholder, #msformOverlay textarea::placeholder {
-	color: black;
+	color: white;
 }
 /*buttons*/
 #msform .action-button, #msformProduct .action-button {
 	width: 100px;
-	background: blue;
+	background: #1E90FF;
 	font-weight: bold;
 	color: white;
 	border: 0 none;
+	height:40px;
 	border-radius: 1px;
 	cursor: pointer;
 	padding: 10px 5px;
@@ -145,7 +146,7 @@ background-color: red;
 	list-style-type: none;
 	color: black;
 	text-transform: uppercase;
-	font-size: 9px;
+	font-size: 13px;
 	width: 33.33%;
 	float: left;
 	position: relative;
@@ -156,7 +157,8 @@ background-color: red;
 	width: 20px;
 	line-height: 20px;
 	display: absolute;
-	font-size: 10px;
+	font-size: 15px;
+	padding: 8px;
 	color: #333;
 	background: white;
 	border-radius: 3px;
@@ -166,7 +168,7 @@ background-color: red;
 #progressbar li:after {
 	content: '';
 	width: 100%;
-	height: 2px;
+	/*height: 2px;*/
 	background: white;
 	position: absolute;
 	left: -50%;
@@ -180,7 +182,7 @@ background-color: red;
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
 #progressbar li.active:before,  #progressbar li.active:after{
-	background: blue;
+	background: #1E90FF;
 	color: white;
 }
 

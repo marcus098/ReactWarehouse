@@ -15,7 +15,11 @@ export default class OrderOverlay extends React.Component{
 
     searchPosition = () => {
         var modified = false;
-        axios.get("http://localhost:8081/api/position/" + this.refs.searchPosition.value + "/" + this.props.props.product.id)
+        axios.get("http://localhost:8081/api/position/" + this.refs.searchPosition.value + "/" + this.props.props.product.id, {
+            headers:{
+                userToken: localStorage.getItem("userToken"),
+            }
+        })
         .then((response) => {
             if(response.data.length != 0){
                 this.setState({positionsSearched: response.data});
@@ -37,7 +41,11 @@ export default class OrderOverlay extends React.Component{
     }
 
     chargeData = () => {
-        axios.get("http://localhost:8081/api/position/"+this.props.props.product.id)
+        axios.get("http://localhost:8081/api/position/"+this.props.props.product.id, {
+            headers:{
+                userToken: localStorage.getItem("userToken"),
+            }
+        })
         .then((response) => {
             if(response.data.length!=0){
                 this.setState({positionsProduct: response.data});
@@ -89,7 +97,7 @@ export default class OrderOverlay extends React.Component{
                 </select>
             );
             saveButton = (
-                <Button className="buttonOverlay" onClick={this.saveWithExistingIdPosition}>Salva</Button>
+                <Button className="buttonOverlay action-button" onClick={this.saveWithExistingIdPosition}>Salva</Button>
             );
         }
         var searched = [];
@@ -155,7 +163,7 @@ export default class OrderOverlay extends React.Component{
                             
                         </fieldset>
                         <fieldset>
-                            {positionSelect}
+                            Posizione: {positionSelect}
                             <i class="bi bi-plus-circle icon clickable next" style={{color:"white"}} onMouseEnter={(e) => e.target.style.color="#2196F3"} onMouseOut={(e) => e.target.style.color="white"}></i>
                             <br></br>
                             <br></br>
@@ -163,18 +171,18 @@ export default class OrderOverlay extends React.Component{
                         
                         </fieldset>
                         <fieldset>
-                            <input type="text" ref="searchPosition" onChange={this.searchPosition} className="searchPosition" style={{width:"15%", marginLeft: "44px", marginTop:"-10px", marginBottom:"30px", border:"0px", borderBottom:"2px solid white", background:"transparent"}} placeholder="Cerca posizione"></input>
+                            <input type="text" ref="searchPosition" onChange={this.searchPosition} className="searchPosition" style={{width:"15%", marginLeft: "44px", marginTop:"-10px", marginBottom:"30px", border:"0px", borderBottom:"2px solid white", background:"transparent", color:"white"}} placeholder="Cerca posizione"></input>
                             <i class="bi bi-plus-circle icon clickable next" style={{color:"white"}} onMouseEnter={(e) => e.target.style.color="#2196F3"} onMouseOut={(e) => e.target.style.color="white"}></i><br></br>
                             {searched}
                             <i class="bi bi-arrow-left-circle iconOverlay clickable previous backOverlay" style={{position:"absolute", left: "-120px", fontSize: "26px"}}></i>
-                            <Button className="buttonOverlay" onClick={this.saveNewWithExistingIdPosition}>Salva</Button>
+                            <Button className="buttonOverlay action-button" onClick={this.saveNewWithExistingIdPosition}>Salva</Button>
                         </fieldset>
                         <fieldset>
-                            <input type="text" className="inputOrderOverlay" placeholder="Nome" ref="name"></input><br></br>
-                            <input type="text" className="inputOrderOverlay" placeholder="Descrizione" ref="description"></input><br></br>
+                            <input type="text" className="inputOrderOverlay" placeholder="Nome" ref="name" style={{background:"transparent", border:"0", borderBottom:"1px solid silver"}}></input><br></br>
+                            <input type="text" className="inputOrderOverlay" placeholder="Descrizione" ref="description" style={{background:"transparent", border:"0", borderBottom:"1px solid silver"}}></input><br></br>
                             <i class="bi bi-arrow-left-circle iconOverlay clickable previous backOverlay" style={{position:"absolute", left: "-120px", fontSize: "26px"}}></i>
                            
-                            <Button className="buttonOverlay" onClick={this.savePosition}>Salva e Aggiungi</Button>
+                            <Button className="buttonOverlay action-button" style={{width:"150px"}} onClick={this.savePosition}>Salva e Aggiungi</Button>
                         </fieldset>
                     </fieldset>
             

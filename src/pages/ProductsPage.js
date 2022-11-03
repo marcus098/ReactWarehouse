@@ -9,6 +9,7 @@ import AddProduct from "./AddProduct";
 import '../css/SearchBar.scss';
 import Loading from "../components/Loading";
 import Category from "../components/Category";
+import Message from "../components/Message";
 
 export default class ProductsPage extends React.Component{
     constructor(props){
@@ -29,7 +30,8 @@ export default class ProductsPage extends React.Component{
             textSearch: '',
             arrow:false,
             addProduct:false,
-            idSupplier:this.checkSupplier()
+            idSupplier:this.checkSupplier(),
+            messageBox : (<></>)
         };
         this.handler = this.handler.bind(this);
     }
@@ -51,7 +53,11 @@ export default class ProductsPage extends React.Component{
     }
     
     searchCategories = async () => {
-        await axios.get("http://localhost:8081/api/categories/"+this.state.idSupplier)
+        await axios.get("http://localhost:8081/api/categories/"+this.state.idSupplier, {
+            headers:{
+                userToken: localStorage.getItem("userToken"),
+            }
+        })
         .then((response) => {
             this.setState({categories: response.data});
             this.setState({totalPages: Math.ceil(response.data.length/20)});
@@ -62,7 +68,11 @@ export default class ProductsPage extends React.Component{
     }
     
     deleteCategory = (id) =>{
-        axios.get("http://localhost:8081/api/categories/delete/"+id)
+        axios.get("http://localhost:8081/api/categories/delete/"+id, {
+            headers:{
+                userToken: localStorage.getItem("userToken"),
+            }
+        })
         .then((response) => {
             if(response.data)
             window.location.replace(`http://localhost:3000/products`);
@@ -139,9 +149,30 @@ export default class ProductsPage extends React.Component{
     addProductByCategory = (id) => {
         this.setState({addProduct:true, c: id})
     }
+
+    emptyMessageBox = () => {
+        this.setState({messageBox: null});
+    }
+
+    delete = (idProduct) => {
+        var url = "http://localhost:8081/api/product/delete/" + idProduct;
+        axios.post(url, {
+            userToken: localStorage.getItem("userToken")
+        })
+        .then((response) => {
+            if(response.data.isBool){
+                this.closeOverlay();
+                this.setState({
+                    overlay: false,
+                    product: []
+                });
+            }
+            this.setState({messageBox: (<Message message={response.data.message} error={!response.data.bool} handler={this.emptyMessageBox}></Message>)})
+        })
+        .catch(console.log("errore"));
+    }
     
     render(){
-        console.log(this.props);
         //dichiaro gli elementi da visualizzare
         var arrElements = [];
         var arrowElement;
@@ -151,6 +182,7 @@ export default class ProductsPage extends React.Component{
             this.props.hideRowContent();
             overlayElements = ( 
                 <Overlay
+                    delete={this.delete}
                     type="product"
                     handler={this.closeOverlay}
                     product={this.state.product}
@@ -163,9 +195,9 @@ export default class ProductsPage extends React.Component{
             }
             
             var filterElemts = (
-                <div className="row filter">
-                    <div>
-                    Min. <input type="number" min="0" onInput={(e) => {
+                <div className="row filter" style={{display:"flex", padding:"20px"}}>
+                    <div style={{width:"100px"}}>
+                    Min. <input type="number" min="0" style={{width:"60px", border:"0px", borderBottom:"1px solid silver"}} onInput={(e) => {
                         if(e.target.value==""){
                             this.setState({min: 0}, () => { 
                                 this.searchProducts(this.state.textSearch);
@@ -177,8 +209,8 @@ export default class ProductsPage extends React.Component{
                         }
                         }} value={this.state.min}></input>
                     </div>
-                <div>
-                Max. <input type="number" onChange={(e) => {
+                <div style={{width:"100px"}}>
+                Max. <input type="number" style={{width:"60px", border:"0px", borderBottom:"1px solid silver"}} onChange={(e) => {
                     (e.target.value=="") ? this.setState({max: -1}) : this.setState({max: e.target.value});
                     if(e.target.value==""){
                         this.setState({max: -1}, () => { 
@@ -205,7 +237,7 @@ export default class ProductsPage extends React.Component{
                             <div className="col-lg-4 col-md-4 col-sm-6 col-6">{/*addProductButton*/}</div>
                         </div>
                         <div className="row">
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-12 searchText">
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-12 searchText" style={{display:"flex", paddingLeft:"30px", paddingBottom:"20px"}}>
                     
                                 <span onClick={(e) => {
                                     e.preventDefault(); 
@@ -256,7 +288,7 @@ export default class ProductsPage extends React.Component{
                                     );
                                 } else {
                                     arrowElement = (
-                                        <i class="bi bi-arrow-left-circle icon clickable" onClick={() => {this.setState({showCategories: true}); this.componentDidMount()}}></i>
+                                        <i class="bi bi-arrow-left-circle icon clickable" style={{position:"absolute", left:"65px", top:"65px"}} onClick={() => {this.setState({showCategories: true, currantPage: 1}); this.componentDidMount()}}></i>
                                         /*<Button >Indietro</Button>*/
                                     );
                                     addProductButton = (

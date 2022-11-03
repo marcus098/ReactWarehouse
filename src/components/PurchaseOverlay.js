@@ -19,10 +19,7 @@ export default class PurchaseOverlay extends React.Component{
     }
 
     render(){
-        console.log(this.props);
-        var inputElements = [];
         var arrElements = [];
-        var purchasesElements = [];
                 var positionElements = [];
                 this.props.props.purchase.products.map((product) => {
                     positionElements = [];
@@ -33,13 +30,13 @@ export default class PurchaseOverlay extends React.Component{
                 }
 
                     arrElements.push(
-                        <section>
+                        <section style={{padding:"10px"}}>
                             <div className="row" onClick={(e) => this.hideShow(product.product.id)}>
                                 <div className="col-md-12 col-sm-12 col-12 col-lg-12 text-center" style={{fontSize: "26px"}}>{product.product.name}</div>
                             </div>
-                            <section id={"show"+product.product.id} ref={"show"+product.product.id} style={{display:"none"}}>
+                            <section id={"show"+product.product.id} ref={"show"+product.product.id} style={{display:"none", color:"silver", fontSize:"18px"}}>
                                 <div className="row">
-                                    <div className="col-md-12 col-sm-12 col-12 col-lg-12">Sconto: {product.product.discount}%</div>
+                                    <div className="col-md-12 col-sm-12 col-12 col-lg-12">Sconto: {product.discount}%</div>
                                 </div>
                                 <div className="row">
                                     <div className="col-md-12 col-sm-12 col-12 col-lg-12">Posizione: <span> </span>

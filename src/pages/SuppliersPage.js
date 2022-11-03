@@ -54,12 +54,13 @@ export default class SuppliersPage extends React.Component{
 
         return (
             <div className="row UserControl noPadding">
-                <span><Link to="/addSupplier" className="element"><Button>Aggiungi fornitore</Button></Link></span>
-                <form class="search-container" action="https://llamaswill.tumblr.com/search">
+                {/*<span><Link to="/addSupplier" className="element"><Button>Aggiungi fornitore</Button></Link></span>*/}
+               
+               {/*} <form class="search-container" action="https://llamaswill.tumblr.com/search">
   <input id="search-box" type="text" class="search-box" name="q" onInput={(e) => this.searchProducts(e.target.value)} /><i class="bi bi-search iconSearch"></i>
   <label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>
   <input type="submit" id="search-submit" />
-</form>
+        </form>*/}
                 <div class="user-grid">
 
                 {elements}

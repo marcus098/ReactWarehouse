@@ -25,10 +25,9 @@ export default class Position extends React.Component{
 
     empty = () => {
       axios.post('http://localhost:8081/api/position/empty/'+this.props.id, {
-          
+        userToken: localStorage.getItem("userToken"),
         })
         .then((response) => {
-          console.log(response);
           if(response){
             this.setState({hasProduct: false});
           }
@@ -40,10 +39,9 @@ export default class Position extends React.Component{
 
     delete = () => {
       axios.post('http://localhost:8081/api/position/delete/'+this.props.id, {
-          
+        userToken: localStorage.getItem("userToken"),
       })
       .then((response) => {
-        console.log(response);
         if(response){
           this.setState({render:false});
         }
@@ -57,11 +55,11 @@ export default class Position extends React.Component{
     savePosition = () => {
       if(this.refs.name.value!=""){
         axios.post('http://localhost:8081/api/position/add/', {
+          userToken: localStorage.getItem("userToken"),
           name: this.refs.name.value,
           description: this.refs.description.value
         })
         .then((response) => {
-          console.log(response);
           if(response.data.bool){
             this.props.newPosition();
             this.refs.name.value="";
@@ -121,8 +119,8 @@ export default class Position extends React.Component{
           nameClass = "green";
           buttonsElement = (
             <div>
-              <Button onClick={this.empty}>Svuota</Button>
-              <Button onClick={this.delete}>Elimina</Button>
+              <Button className="action-button" onClick={this.empty} style={{margin:"10px"}}>Svuota</Button>
+              <Button className="action-button" onClick={this.delete}>Elimina</Button>
             </div>
           );
         }
@@ -132,18 +130,15 @@ export default class Position extends React.Component{
             <span class="survey-name">
               <h3>
                 {this.props.name}
-                {console.log(this.props)}
               </h3>
             </span>
             <div class="pull-right">
-              <span class="survey-date">
-              </span>
+              <span class="survey-date"></span>
               <span class="survey-stage">
                 <span class={"stage ended active "+nameClass}></span>        
               </span>
             </div>
-            <div>
-              
+            <div> 
               {this.props.description}<br></br>
               {(this.state.hasProduct) ? "Prodotto: " + this.props.productName : "Nessun prodotto"}
             </div>

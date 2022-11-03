@@ -20,43 +20,13 @@ ChartJS.register(
   Legend
 );
 
-/*export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Bar Chart',
-    },
-  },
-};*/
 
 var labels = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
-
-/*export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: new Array(1, 2, 332,1000,100),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-   /* {
-      label: 'Dataset 2',
-      data: new Array(1, 2, 332,1000,100),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },*//*
-  ],
-};*/
 
 export default class BarChart extends React.Component {
     constructor(props){
         super(props);
         labels = props.months;
-        console.log(props.months[0]);
-        console.log(labels);
         this.state = {
             data: {
                 labels,
@@ -86,6 +56,10 @@ export default class BarChart extends React.Component {
                 },
               }
         };
+    }
+    componentDidUpdate = (prevProps) => {
+      console.log(this.props);
+      console.log(prevProps);
     }
       
     render(){

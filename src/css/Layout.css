@@ -7,6 +7,10 @@
     margin-top:30px
 }
 
+.center{
+	padding-top: 10px;
+}
+
 .icon{
 	color:#1E90FF;
 	padding:10px;
@@ -47,7 +51,7 @@
 }
 
 .boxPage{
-	color:green;
+	color:black;
 	background-color: transparent;
 	font-size:20px;
 	border:none
@@ -75,7 +79,7 @@
     --bs-btn-bg: #1E90FF;
     --bs-btn-border-color: #1E90FF;
     --bs-btn-hover-color: auto;
-    --bs-btn-hover-bg: yellow;
+    --bs-btn-hover-bg: #1E90FF;
     --bs-btn-hover-border-color: #0a58ca;
     --bs-btn-focus-shadow-rgb: 49,132,253;
     --bs-btn-active-color: #1E90FF;
@@ -165,6 +169,13 @@
   z-index: 2000;
 }
 
+.productList{
+	height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 /*form styles*/
 #msform {
 	width: 400px;
@@ -172,12 +183,22 @@
 	text-align: center;
 	position: relative;
 }
+
 #msformProduct {
-	width: 80%;
+	width: 60%;
 	margin: 50px auto;
 	text-align: center;
 	position: relative;
 }
+
+.delete{
+	color:white
+}
+.delete:hover{
+	color:red;
+	cursor: pointer;
+}
+
 #msformOverlay {
 	width: 80%;
 	margin: 50px auto;
@@ -198,6 +219,7 @@
 	position: relative;
 	display: block;
 }
+
 /*Nascondo tutti tranne il primo*/
 #msform fieldset:not(:first-of-type), #msformProduct fieldset:not(:first-of-type) {
 	display: none;
@@ -218,6 +240,10 @@
 	font-size: 13px;
 }
 
+#msformProduct input::placeholder{
+	color:black
+}
+
 #msformOverlay input, #msformOverlay textarea {
 	padding: 15px;
 	border: 1px solid #ccc;
@@ -232,7 +258,7 @@
 /*buttons*/
 #msform .action-button, #msformProduct .action-button {
 	width: 100px;
-	background: blue;
+	background: #1E90FF;
 	font-weight: bold;
 	color: white;
 	border: 0 none;
@@ -247,7 +273,7 @@
 
 #msformOverlay .action-button {
 	width: 100px;
-	background: blue;
+	background: #1E90FF;
 	font-weight: bold;
 	color: white;
 	border: 0 none;
@@ -274,6 +300,13 @@
 	background:"transparent";
 	color:"white"; 
 	padding:"10px"; 
+	margin:"0px"
+}
+.searchPosition::placeholder{
+	width:"150px";
+	background:"transparent";
+	color:"white"; 
+	padding:"100px"; 
 	margin:"0px"
 }
 
@@ -325,13 +358,13 @@
 	left: 2px;
 	top: 44px;
 	cursor: pointer;
-	transition: all .3s;
+	/*transition: all .3s;*/
 }
 
 .carpi:before {
 	content: "";
 	position: absolute;
-	width: 2px;
+	width: 0px;
 	height: 32px;
 	background: #5D5D5D;
 	top: 5px;
@@ -341,7 +374,7 @@
 .carpi:after {
 	content: "";
 	position: absolute;
-	width: 32px;
+	width: 0px;
 	height: 2px;
 	background: #5D5D5D;
 	left: 5px;
@@ -384,7 +417,7 @@ a{
 
 #yuvarlak:hover > #icerik {
 	transform: scale(1);
-  transform: rotate(0);
+  	transform: rotate(0);
 }
 
 #yuvarlak:hover > #icerik span {
@@ -392,7 +425,7 @@ a{
 }
 
 #yuvarlak:hover > .carpi {
-	transform: rotate(135deg);
+	/*transform: rotate(135deg);*/
 }
 
 #yuvarlak:hover > .carpi:before, #yuvarlak:hover > .carpi:after {

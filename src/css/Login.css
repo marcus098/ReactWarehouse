@@ -24,10 +24,104 @@ input{
     padding: 10px;
 }
 
+.hideContactForm1{
+    position: relative;
+    top:-250px;
+    margin-top: 100px;
+    transition: all 2s;
+}
 
-/*
-######################################
-*/
+.showContactForm1{
+    position: relative;
+    top:15px;
+    display: flex;
+    margin-top: 10px;
+    height:100%;
+    text-align: center;
+    justify-content: center;
+    background-color: white;
+    /*transition: all 2s;*/
+    animation: prova 3s ;
+    animation-fill-mode: forwards;  
+}
+
+@keyframes prova {
+    0%   {
+        top: -250px;
+        width: 50%;
+    }
+    50%  {
+        top: 15px;
+        width:50%;
+    }
+    100% {
+        top: 15px;
+        width:65%;
+    }
+}
+@keyframes prova2 {
+    0%   {
+        top: 250px;
+        width: 50%;
+    }
+    50%  {
+        top: 15px;
+        width:50%;
+    }
+    100% {
+        top: 15px;
+        width:35%;
+    }
+}
+
+.hideContactForm2{
+    position: relative;
+    top:250px;
+    transition: all 2s;
+}
+
+.showContactForm2{
+    position: relative;
+    top:25px;
+    display: flex;
+    margin-top: 0px;
+    height:100%;
+    text-align: center;
+    right: 0;
+    justify-content: center;
+    background-color: #55abf1;
+    transition: all 2s;
+    animation: prova2 3s ;
+    animation-fill-mode: forwards;  
+}
+
+.contactForm input::placeholder{
+    color:gray;
+}
+.contactForm input{
+    border: 0;
+    border-bottom: 2px solid#2196F3;
+    text-align: center;
+    margin: 20px;
+    font-size: 20px;
+    width: 350px
+}
+.contactForm textarea{
+    margin:20px;
+    width:350px;
+    height: 100px;
+    border: 0;
+    border-radius: 10px;
+    border-bottom: 1px solid#2196F3;
+    border: 1px solid#2196F3;
+    text-align: center;
+}
+.contactForm{   
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
 
 
 

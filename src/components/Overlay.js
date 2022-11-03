@@ -30,6 +30,8 @@ export default class Overlay extends React.Component{
    
 
 render(){ 
+    window.scrollTo(0,0);
+    document.body.style.overflow = "hidden";
     var typeReturn = (<></>);
     switch(this.props.type){
         case "product":
@@ -53,7 +55,7 @@ render(){
         }
         return(
             <div className="overlay">
-                <i class="bi bi-x-lg close" onClick={() => this.props.handler()}></i>
+                <i class="bi bi-x-lg close" onClick={() => {document.body.style.overflow = "";this.props.handler()}}></i>
                 
                 {typeReturn}
             </div>

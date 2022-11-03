@@ -5,12 +5,14 @@ import "./functions";
 import {Helmet} from "react-helmet";
 import $ from "jquery";
 import axios from "axios";
+import Message from "../components/Message";
 
 export default class AddAccount extends React.Component{
     constructor(props){
         super(props);
         this.state = {
           formCompiled: false,
+          messageBox: (<></>)
         }
     }
 
@@ -62,9 +64,8 @@ export default class AddAccount extends React.Component{
               console.log(response);
               if(response.data.bool){
                 window.location.replace(`http://localhost:3000/userControl`);
-              }else{
-                //show error message
               }
+              this.setState({message: (<Message message={response.data.message} error={!response.data.bool} handler={this.emptyMessageBox}></Message>)})
             })
             .catch(function (error) {
               console.log(error);
@@ -76,6 +77,7 @@ export default class AddAccount extends React.Component{
         return(
           <body>
           <main class="sign-up">
+            {this.state.message}
             <div class="sign-up__container">
               <div class="sign-up__content">
                 <header class="sign-up__header">

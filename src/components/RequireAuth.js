@@ -12,11 +12,11 @@ const RequireAuth =  ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ value: localStorage.getItem("userToken"), page: children.props.page })
     };
-    if(isLoading==true){
+    if(isLoading == true){
         fetch('http://localhost:8081/api/check', requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log(data.message)
+                console.log(data);
                 if(data.bool == false){
                     if(data.message == "Unauthorized"){
                         window.location.replace(`http://localhost:3000/unauthorized`);
