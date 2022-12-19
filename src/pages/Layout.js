@@ -6,34 +6,44 @@ import { CartProvider } from "react-use-cart";
 import { useCart } from "react-use-cart";
 import Product from "../components/Product";
 import axios from "axios";
+import Message from "../components/Message";
 
 class Layout extends React.Component {
   constructor(props){
     super(props);
+    console.log(props);
     this.state = {
       products: [],
       count: 0,
       id: 0,
-      cart: (<></>)
+      cart: (<></>),
+      updateProducts: false,
+      messageBox: null
     }
   }
 
   componentDidMount = () => {
     var storedArray = JSON.parse(localStorage.getItem("productsCart"));
-    console.log(storedArray);
     if(storedArray && storedArray.length != 0){
-      this.setState({products: storedArray, id: this.state.id+1});
+      this.setState({products: storedArray, id: this.state.id + 1});
+    }
+  }
+
+  componentDidUpdate = () => {
+    if(this.state.updateProducts){
+      var storedArray = JSON.parse(localStorage.getItem("productsCart"));
+      if(storedArray && storedArray.length != 0){
+        this.setState({products: storedArray, id: this.state.id + 1, updateProducts: false});
+      }
     }
   }
 
   emptyCart = () => {
-    this.setState({products: [], id: this.state.id+1});
+    this.setState({products: [], id: this.state.id + 1});
     localStorage.removeItem("productsCart");
-    this.setState({count: this.state.count+1});
   }
 
   sell = (desc) => {
-    this.setState({count: this.state.count+1});
     var storedArray = JSON.parse(localStorage.getItem("productsCart"));
     axios.post('http://localhost:8081/api/sell', {
       list: storedArray
@@ -44,53 +54,61 @@ class Layout extends React.Component {
     }
   })
     .then((response) => {
-      if(response.data){
-        this.setState({products: [], id: this.state.id+1});
+      if(response.data.bool){
+        this.setState({products: [], id: this.state.id + 1, updateProducts: true});
         localStorage.removeItem("productsCart");
       }
+        this.setState({messageBox: (<Message message={response.data.message} error={!response.data.bool} handler={this.emptyMessageBox}></Message>)});
     })
     .catch(function (error) {
       console.log(error);
     });
   }
+
+  emptyMessageBox = () => {
+    this.setState({messageBox: null});
+  }
     
   modifyQuantity = (idProduct, newQuantity) => {
-    if(this.state.products.length!=0){
+    if(this.state.products.length != 0){
+      var arrTmp = this.state.products;
       for(var i = 0; i < this.state.products.length; i++){
         if(this.state.products[i].id == idProduct){
-          if(newQuantity==0){
-            this.state.products.splice(i, 1);
-          }else if(newQuantity>0){
-            this.state.products[i].quantity = newQuantity;
-          }
-          break;
+          if(newQuantity == 0)
+            arrTmp.splice(i, 1);
+          else if(newQuantity > 0)
+            arrTmp[i].quantity = newQuantity;
+          
+          this.setState({products: arrTmp, id: this.state.id + 1, updateProducts: true });
+          localStorage.setItem("productsCart", JSON.stringify(this.state.products));
+          return;
         }
       }
-      this.setState({count: this.state.count+1});
     }
   }
 
   addToCart = (idProduct, nameProduct, priceProduct, quantityProduct, discountProduct) => {
-    var value = false;
-    if(this.state.products && this.state.products.length != 0){
-      var arrTmp = [];
-      for(var i = 0; i < this.state.products.length; i++){
-        arrTmp[i] = this.state.products[i];
-        if(this.state.products[i].id == idProduct){
-          localStorage.setItem("productsCart", JSON.stringify(this.state.products));
-          value = true;
+    var storedArray = JSON.parse(localStorage.getItem("productsCart"));
+    if(storedArray && storedArray.length != 0){
+      var arrTmp = storedArray;
+      for(var i = 0; i < arrTmp.length; i++){
+        if(arrTmp[i].id == idProduct){
           arrTmp[i].quantity = parseInt(arrTmp[i].quantity) + parseInt(quantityProduct);
+          this.setState({products: arrTmp, id: this.state.id + 1, updateProducts: true});
+          localStorage.setItem("productsCart", JSON.stringify(arrTmp));
+          return;
         }
       }
-    }
-    if(value){
-      this.setState({product: arrTmp});
-      localStorage.setItem("productsCart", JSON.stringify(this.state.products));
+      var arr = {id:idProduct,name:nameProduct, price: parseInt(priceProduct), quantity: parseInt(quantityProduct), discount: parseInt(discountProduct)};
+      storedArray[storedArray.length] = arr;
+      this.setState({products: storedArray, id: this.state.id + 1, updateProducts: true});
+      localStorage.setItem("productsCart", JSON.stringify(storedArray));
       return;
     }
-    var arr = {id:idProduct,name:nameProduct, price: parseInt(priceProduct), quantity: parseInt(quantityProduct), discount: parseInt(discountProduct)};
-    this.setState({products: this.state.products.push(arr), id: this.state.id+1});
-    localStorage.setItem("productsCart", JSON.stringify(this.state.products));
+    var arr = [];
+    arr[0] = {id:idProduct,name:nameProduct, price: parseInt(priceProduct), quantity: parseInt(quantityProduct), discount: parseInt(discountProduct)};
+    this.setState({products: arr, id: this.state.id + 1, updateProducts: true});
+    localStorage.setItem("productsCart", JSON.stringify(arr));
   }
 
   hideRowContent = () => {
@@ -108,23 +126,13 @@ class Layout extends React.Component {
     var addToCart = this.addToCart;
     var showRowContent = this.showRowContent;
     var hideRowContent = this.hideRowContent;
-    var cart = ( 
-      <Cart 
-          products={this.state.products} 
-          modifyQuantity={this.modifyQuantity} 
-          sell={this.sell} 
-          emptyCart={this.emptyCart}
-          addToCart={this.addToCart}
-        ></Cart>
-    );
-    console.log("Carico");
-    
+    var storedArray = JSON.parse(localStorage.getItem("productsCart"));
       return (
         <section>
-          {/*this.state.cart*/}
+          {this.state.messageBox}
           <Cart 
             id={this.state.id}
-            products={this.state.products} 
+            products={storedArray} 
             modifyQuantity={this.modifyQuantity} 
             sell={this.sell} 
             emptyCart={this.emptyCart}

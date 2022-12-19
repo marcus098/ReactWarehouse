@@ -139,7 +139,7 @@ export default class Home extends React.Component{
             var barChart1 = (<></>);
             var barChart2 = (<></>);
             if(this.state.charged >2){
-            barChart1 = (
+              barChart1 = (
                 <BarChart 
                     months={this.state.actualMonthsArray}
                     firstName="Quantita'"
@@ -147,30 +147,29 @@ export default class Home extends React.Component{
                     title="Ordini" 
                     firstValues={this.state.orderQuantityArray} 
                     secondValues={this.state.orderTotalArray}/>
-        );
-        barChart2 = (
-            <BarChart 
+              );
+              barChart2 = (
+                <BarChart 
                     months={this.state.actualMonthsArray}
                     firstName="Quantita'"
                     secondName="Totale" 
                     title="Vendite" 
                     firstValues={this.state.sellQuantityArray} 
                     secondValues={this.state.sellTotalArray}/>
-            );
-        var orderToArrive = (<></>);
-        if(this.state.orders.length!=0){
-            orderToArrive = (
-              <div class="card">
-                <div class="card__header">
-                  <div class="card__header-title text-light">Ordini in arrivo (<a href="/orders">Vedi tutti</a>)
+                );
+              var orderToArrive = (<></>);
+              if(this.state.orders.length!=0){
+                orderToArrive = (
+                <div class="card">
+                  <div class="card__header">
+                    <div class="card__header-title text-light">Ordini in arrivo (<a href="/orders">Vedi tutti</a>)
+                    </div>
                   </div>
-          
+                  {ordersElement}
                 </div>
-               {ordersElement}
-              </div>
-            );
-        }
-        }
+              );
+            }
+          }
 
 return(
   <main class="main">

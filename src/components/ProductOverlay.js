@@ -79,8 +79,8 @@ export default class ProductOverlay extends React.Component{
         }
     }
 
-    sell = () => {
-       this.props.props.addToCart(this.props.props.product.id, this.props.props.product.name, this.props.props.product.priceSell, this.refs.quantitySell.value, this.refs.discountSell.value);
+    sell = () => {//position
+        this.props.props.addToCart(this.props.props.product.id, this.props.props.product.name, this.props.props.product.priceSell, this.refs.quantitySell.value, this.refs.discountSell.value);
         this.props.props.handler();
     }
 
@@ -129,8 +129,8 @@ export default class ProductOverlay extends React.Component{
                     <fieldset>
                         
                         <i class="bi bi-arrow-left-circle iconOverlay clickable next" style={{position:"absolute", top:"-41px", left: "-120px", fontSize: "26px"}}></i>
-                        Quantita': <input placeholder="Quantita'" min="1" style={{color:"black"}} max={this.props.props.quantity} onChange={this.totalFunction} ref="quantitySell" defaultValue="1"></input><br></br>
-                        Sconto: (%) <input placeholder="Sconto in %" style={{color:"black"}} onChange={this.totalFunction} defaultValue={this.props.props.product.discount} ref="discountSell"></input><br></br>
+                        Quantita': <input className="placeholderBlack" placeholder="Quantita'" min="1" style={{color:"black"}} max={this.props.props.quantity} onChange={this.totalFunction} ref="quantitySell" defaultValue="1"></input><br></br>
+                        Sconto: (%) <input className="placeholderBlack" placeholder="Sconto in %" style={{color:"black"}} onChange={this.totalFunction} defaultValue={this.props.props.product.discount} ref="discountSell"></input><br></br>
                         <br></br>
                         <span style={{height: "100px"}}>Totale: €{this.state.total}</span> 
                         <br></br>
@@ -167,8 +167,8 @@ export default class ProductOverlay extends React.Component{
                     <fieldset style={{ justifyContent: "center"}}>
                         <span style={{fontSize: "26px"}}>Lista fornitori:</span>
                             {elements}
-                        <input type="number" style={{ padding:"10px", marginTop:"20px" }} placeholder="Quantita" ref="quantity"></input><br></br>
-                        <textarea type="text" placeholder="Descrizione" ref="description" style={{width:"40%", height:"150px"}}></textarea><br></br>
+                        <input type="number" className="placeholderBlack" style={{ padding:"10px", marginTop:"20px" }} placeholder="Quantita" ref="quantity"></input><br></br>
+                        <textarea type="text" className="placeholderBlack" placeholder="Descrizione" ref="description" style={{width:"40%", height:"150px"}}></textarea><br></br>
                         <i class="bi bi-arrow-left-circle iconOverlay clickable previous" style={{position:"absolute", top:"-41px", left: "-120px", fontSize: "26px"}}></i>
                         
                         <Button onClick={this.saveSupplier}>

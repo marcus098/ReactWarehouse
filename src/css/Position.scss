@@ -190,82 +190,8 @@ $theme-color: #8DC63F;
     }
   }
 }
-  /*
-  .survey-name {
-    display: block;
-    max-width: 80%;
-    
-    font-size: 16px;
-    line-height: 20px;
-  }
   
-  .survey-country {
-    font-size: 11px;
-    line-height: 16px;
-    text-transform: uppercase;
-  }
-  
-  .survey-country,
-  .survey-end-date {
-    color: $secondary-text-color;
-  }
-  
-  .survey-end-date {
-    &:before {
-      content: 'Ends\00a0';
-    }
-    
-    &.ended:before {
-      content: 'Ended\00a0';
-    }
-  }
-  
-  .survey-progress {
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    padding: 20px;
-    border-top: 1px solid #eee;
-    font-size: 13px;
-  }
-  
-  .survey-progress-bg {
-    width: 40%;
-    display: block;
-  
-    @media screen and (max-width: 200px) {
-      display: none;
-    }
-  }
-  
-  .survey-progress-labels {
-    position: absolute;
-    right: 20px;
-    top: 0;
-    line-height: 40px;
-  
-    @media screen and (max-width: 200px) {
-      right: auto;
-      left: 10px;
-    }    
-  }
-  
-  .survey-progress-label {
-    line-height: 21px;
-    font-size: 13px;
-    font-weight: 400;
-  }
-  
-  .survey-completes {
-    line-height: 21px;
-    font-size: 13px;
-    vertical-align: middle;
-  }  */
-  
-  .survey-stage {
+    .survey-stage {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -278,36 +204,3 @@ $theme-color: #8DC63F;
       display: block;
     }
   }
-  /*
-  .survey-end-date {
-    font-size: 12px;
-    line-height: 20px;
-  }
-}
-
-.survey-progress-label {
-  vertical-align: middle;
-  margin: 0 10px;
-  color: $theme-color;
-}
-
-.survey-progress-bg {
-  display: inline-block;
-  vertical-align: middle;
-  position: relative;
-  width: 100px;
-  height: 4px;
-  border-radius: 2px;
-  overflow: hidden;
-  background: #eee;
-}
-
-.survey-progress-fg {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  left: 0;
-  margin: 0;
-  background: $theme-color;
-}*/

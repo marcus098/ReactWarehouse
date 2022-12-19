@@ -39,6 +39,7 @@ export default class AddProduct extends React.Component{
     searchSuppliersByName = (value) => {
         axios.get("http://localhost:8081/api/suppliers/search/"+value)
                 .then((response) => {
+                  console.log(response);
                     this.setState({
                     supplierList: response.data
                 });

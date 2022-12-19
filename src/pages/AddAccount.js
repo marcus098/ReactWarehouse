@@ -85,7 +85,7 @@ export default class AddAccount extends React.Component{
                     Aggiungi un utente
                   </h1>
                   <p class="sign-up__descr">
-                    Inserisci i dati
+                    
                   </p>
                 </header>
                 <form class="sign-up__form form">

@@ -1,4 +1,3 @@
-/* Demo */
 .loadingContainer {
     height: 100vh;
     display: flex;
@@ -11,17 +10,14 @@
     background-color: rgba(255,255,255,0.8);
   }
   
-  /* Animation */
   @keyframes rotate {
     to {
       transform: rotate(360deg);
     }
   }
   
-  /* Variables */
   $loader-size: 200px;
   
-  /* Loading Icon */
   .loading {
     width: $loader-size;
     height: $loader-size;

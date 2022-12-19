@@ -49,36 +49,35 @@ export default class PositionPage extends React.Component{
       this.setState({
           currantPage: value
       });
-  }
+    }
 
     render(){
-      
       var arrElements = [];
         if(this.state.positionList.length != 0){
-            for(var i = ((this.state.currantPage - 1) * 19); i < (this.state.currantPage * 19); i++){
-                if(i<this.state.positionList.length){
-                    arrElements.push(
-                      <Position
-                          new={false}
-                          id={this.state.positionList[i].id}
-                          name={this.state.positionList[i].name}
-                          description={this.state.positionList[i].description}
-                          productId={(this.state.positionList[i].product) ? this.state.positionList[i].product.id : ""}
-                          productName={(this.state.positionList[i].product) ? this.state.positionList[i].product.name : ""}
-                      />
-                        );
-                    }
-                }
+          for(var i = ((this.state.currantPage - 1) * 19); i < (this.state.currantPage * 19); i++){
+            if(i<this.state.positionList.length){
+              arrElements.push(
+                <Position
+                  new={false}
+                  id={this.state.positionList[i].id}
+                  name={this.state.positionList[i].name}
+                  description={this.state.positionList[i].description}
+                  productId={(this.state.positionList[i].product) ? this.state.positionList[i].product.id : ""}
+                  productName={(this.state.positionList[i].product) ? this.state.positionList[i].product.name : ""}
+                />
+              );
             }
+          } 
+        }
             
     if(this.state.loading==false){
         return (
             <section>
               <ul class="surveys grid" style={{display:"flex", flexWrap: "wrap", justifyContent: "center"}}>
-              <Position
-                        new={true}
-                        newPosition={this.chargePositions}
-                      />
+                <Position
+                  new={true}
+                  newPosition={this.chargePositions}
+                />
                 {arrElements}  
                 <br></br>
                 

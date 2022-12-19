@@ -6,60 +6,6 @@
 
 html {
 	height: 100%;
-	/*Image only BG fallback*/
-	
-	/*background = gradient + image pattern combo*/
-	/*background: 
-		linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));*/
-}
-/*form styles*/
-/*#msform {
-	width: 400px;
-	margin: 50px auto;
-	text-align: center;
-	position: relative;
-}
-#msformProduct {
-	width: 80%;
-	margin: 50px auto;
-	text-align: center;
-	position: relative;
-}
-#msformOverlay {
-	width: 80%;
-	margin: 50px auto;
-	text-align: center;
-	position: relative;
-}
-#msform fieldset, #msformProduct fieldset {
-	background: white;
-	border: 0 none;
-	border-radius: 3px;
-	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-	padding: 20px 30px;
-	box-sizing: border-box;
-	width: 80%;
-	margin: 0 10%;
-	position: relative;
-}
-#msformOverlay fieldset {
-	background: white;
-	border: 0 none;
-	border-radius: 3px;
-	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-	padding: 20px 30px;
-	box-sizing: border-box;
-	width: 80%;
-	margin: 0 10%;
-	/*Li posiziono uno sotto l'altro*
-	position: relative;
-}
-/*Hide all except first fieldset*
-#msform fieldset:not(:first-of-type), #msformProduct fieldset:not(:first-of-type) {
-	display: none;
-}
-#msformOverlay fieldset:not(:first-of-type){
-	display: none;
 }
 /*inputs*/
 #msform input, #msform textarea, #msformProduct input, #msformProduct textarea {
@@ -86,7 +32,7 @@ html {
 	font-size: 13px;
 }
 #msformOverlay input::placeholder, #msformOverlay textarea::placeholder {
-	color: white;
+	color: black;
 }
 /*buttons*/
 #msform .action-button, #msformProduct .action-button {
